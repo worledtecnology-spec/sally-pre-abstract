@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بيئة تدريب مصغر - الوحدة الأولى</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0b1f3a;
+            --navy-light: #1a3e72;
+            --gold: #b8860b;
+            --gold-light: #d4a017;
+            --cream: #faf7f0;
+            --white: #ffffff;
+            --accent-teal: #145a67;
+            --border: rgba(184, 134, 11, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--cream);
+            color: var(--navy);
+            line-height: 1.6;
+            direction: rtl;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .top-header {
+            background: var(--navy);
+            color: var(--gold-light);
+            text-align: center;
+            padding: 12px 0;
+            font-size: 15px;
+            font-weight: 600;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .main-nav {
+            background: var(--white);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 20px;
+            background: var(--cream);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .icon-symbol {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: var(--navy);
+            color: var(--gold-light);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(11, 31, 58, 0.15);
+        }
+
+        .nav-item:hover .icon-symbol {
+            transform: scale(1.2);
+        }
+
+        .education-nav {
+            background: var(--accent-teal);
+            padding: 15px 0;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .edu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .edu-item {
+            text-decoration: none;
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 10px;
+            min-width: 110px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .edu-item:hover {
+            background: var(--gold);
+            transform: translateY(-3px);
+            border-color: var(--white);
+        }
+
+        .edu-icon { font-size: 24px; }
+        .edu-text { font-size: 11px; font-weight: 700; text-align: center; }
+
+        .section-title {
+            position: relative;
+            text-align: center;
+            font-family: 'Amiri', serif;
+            font-size: 22px;
+            color: #faf7f0;
+            margin: 1px auto 9px;
+            padding-bottom: 1px;
+            width: fit-content;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            border-radius: 2px;
+        }
+
+        .section-title:hover {
+            color: var(--gold);
+            transition: 0.3s;
+        }
+
+        /* الحاوية الرئيسية */
+        .unit-hero-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 3px 3px;
+        }
+
+        :root {
+            --navy: #0b1f3a;
+            --gold: #b8860b;
+            --gold-light: #d4a017;
+            --cream: #faf7f0;
+            --white: #ffffff;
+            --accent-teal: #145a67;
+            --border: rgba(184, 134, 11, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--cream);
+            color: var(--navy);
+            direction: rtl;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .top-header {
+            background: var(--navy);
+            color: var(--gold-light);
+            text-align: center;
+            padding: 8px 0;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .main-nav {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 8px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 15px;
+            background: var(--cream);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .education-nav {
+            background: var(--accent-teal);
+            padding: 3px 0;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .edu-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .edu-icon { 
+    font-size: 13px; /* تصغير الأيقونة قليلاً لتناسب السطر */
+}
+
+.edu-text { 
+    font-size: 13px; /* تكبير النص قليلاً للوضوح */
+    font-weight: 700; 
+    text-align: right; 
+    white-space: nowrap; /* منع النص من الانقسام لسطرين */
+}
+        .edu-item {
+            text-decoration: none;
+            color: var(--white);
+            display: flex;
+            /* تغيير الاتجاه ليكون أفقي بدلاً من عمودي */
+            flex-direction: row; 
+            align-items: center;
+            /* إضافة مسافة بين الأيقونة والنص */
+            gap: 1px; 
+            padding: 9px 6px;
+            /* إزالة الحد الأدنى للعرض أو تعديله ليتناسب مع التصميم الأفقي */
+            min-width: auto; 
+            background: rgba(255,255,255,0.1);
+            border-radius: 13px;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+
+        .section-title {
+            text-align: center;
+            font-family: 'Amiri', serif;
+            font-size: 20px;
+            color: #faf7f0;
+            margin-bottom: 1px;
+        }
+
+        /* كارت الاختبار */
+        .unit-hero-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 3px;
+        }
+
+        .quiz-card {
+            background: var(--white);
+            width: 100%;
+            max-width: 750px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .quiz-header {
+            background: var(--navy);
+            padding: 10px;
+            text-align: center;
+        }
+
+        .quiz-header-title {
+            font-family: 'Amiri', serif;
+            color: #faf7f0;
+            font-size: 22px;
+        }
+
+        /* الجزء المطلوب دمجه */
+        .quiz-progress-wrap { padding: 3px 25px 0; }
+        
+        .quiz-progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--navy-light);
+        }
+
+        .quiz-progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e8e0d0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            background: var(--gold);
+            transition: width 0.4s;
+        }
+
+        .quiz-body { padding: 12px 25px; }
+
+        .quiz-question-label {
+            display: inline-block;
+            background: rgba(20,90,103,0.1);
+            color: #145a67;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 2px 12px;
+            border-radius: 50px;
+            margin-bottom: 8px;
+        }
+
+        .quiz-instruction {
+            background: #f0f7f9;
+            border-right: 4px solid #145a67;
+            padding: 8px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            border-radius: 4px;
+        }
+
+        .quiz-question-text {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            padding: 3px 15px;
+            background: var(--cream);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .quiz-options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            padding: 3px 15px;
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quiz-option.selected {
+            border-color: var(--navy);
+            background: #f0f4f8;
+        }
+
+        .option-indicator {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+
+        .quiz-option.selected .option-indicator {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 25px 20px;
+        }
+
+        .quiz-btn {
+            padding: 8px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            border: none;
+            font-weight: 700;
+            font-family: 'Cairo';
+            font-size: 14px;
+        }
+
+        .btn-next { background: var(--navy); color: var(--gold-light); }
+
+        /* شاشة النتيجة */
+        .quiz-result {
+            display: none;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .result-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 800;
+            border: 5px solid var(--navy);
+        }
+
+        .main-footer {
+            background: var(--navy);
+            color: var(--white);
+            text-align: center;
+            padding: 10px 0;
+            font-size: 12px;
+            color: var(--gold-light); font-weight: 700;
+        }
+        @media (max-width: 640px) {
+    .hs { width: 38px; height: 38px; font-size: 12px; }
+    .edu-item { min-width: 82px; }
+    .modal-box { border-radius: 16px; }
+    .modal-header, .modal-body, .modal-footer { padding-left: 16px; padding-right: 16px; }
+}
+
+@media (max-height: 768px) {
+    .hs { width: 38px; height: 38px; font-size: 12px; }
+    .modal-box { border-radius: 14px; }
+    .modal-header, .modal-body, .modal-footer { padding-top: 12px; padding-bottom: 12px; }
+}
+
+@media (max-height: 700px) {
+    .hs { width: 34px; height: 34px; font-size: 11px; }
+    .modal-box { border-radius: 12px; }
+    .modal-header, .modal-body, .modal-footer { padding-top: 8px; padding-bottom: 8px; }
+}
+    </style>
+</head>
+<body>
+
+    <div class="top-header">
+    بيئة تدريب مصغر لتنمية مهارات تصميم الاختبارات الإلكترونية وكفاءة الذات المهنية لدى معلمي المرحلة الإعدادية
+
+    <span style="
+        position: absolute;
+        left: 20px;
+        background: var(--gold);
+        color: var(--navy);
+        font-size: 13px;
+        font-weight: 900;
+        padding: 4px 14px;
+        border-radius: 20px;
+        letter-spacing: 0.3px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        white-space: nowrap;
+    ">✦ بيئة تدريب مصغر — ملخص قبلي</span>
+</div>
+
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-item" target="_self">
+                <span class="icon-symbol">🏠</span>
+                <span>الصفحة الرئيسية</span>
+            </a>
+            <a href="../mods.html" class="nav-item" target="_self">
+                <span class="icon-symbol">📚</span>
+                <span>المحتوى التعليمي</span>
+            </a>
+            <a href="../instruction.html" class="nav-item" target="_self">
+                <span class="icon-symbol">📜</span>
+                <span>التعليمات</span>
+            </a>
+            <a href="../contact.html" class="nav-item" target="_self>
+                <span class="icon-symbol">✉️</span>
+                <span>التواصل</span>
+            </a>
+        </div>
+    </nav>
+    <div class="education-nav">
+        <h1 class="section-title">الموضوع السابع</h1>
+        <div class="edu-container">
+             <a href="#" class="edu-item" target="_self">
+                <span class="edu-icon"></span>
+                <span class="edu-text">ملخص الوحدة</span>
+            </a>
+            <a href="#" class="edu-item" target="_self"> 
+                <span class="edu-icon">📌</span>
+                <span class="edu-text">عنوان الوحدة</span>
+            </a>
+            <a href="t7unit5aims.html" class="edu-item" target="_self">
+                <span class="edu-icon">🎯</span>
+                <span class="edu-text">الهدف من الدراسة</span>
+            </a>
+            <a href="#" class="edu-item" target="_self">
+                <span class="edu-icon">📝</span>
+                <span class="edu-text">الاختبار القبلي</span>
+            </a>
+            <a href="t7unit5content.html" class="edu-item" target="_self">
+                <span class="edu-icon">📖</span>
+                <span class="edu-text">محتوى الوحدة</span>
+            </a>
+            <a href="#" class="edu-item" target="_self">
+                <span class="edu-icon">🧠</span>
+                <span class="edu-text">التقويم الذاتي</span>
+            </a>
+            <a href="#" class="edu-item" target="_self">
+                <span class="edu-icon">🧩</span>
+                <span class="edu-text">النشاط التعليمي</span>
+            </a>
+            <a href="#" class="edu-item" target="_self">
+                <span class="edu-icon">🏆</span>
+                <span class="edu-text">الاختبار البعدي</span>
+            </a>
+        </div>
+    </div>
+    <main class="unit-hero-container">
+        <div class="quiz-card">
+            <div class="quiz-header">
+                <h2 class="quiz-header-title">الاختبار القبلي</h2>
+            </div>
+
+            <div id="quizContent">
+                <div class="quiz-progress-wrap">
+                    <div class="quiz-progress-info">
+                        <span id="qCounter">السؤال 1 من 3</span>
+                        <span id="qPercent">0%</span>
+                    </div>
+                    <div class="quiz-progress-bar">
+                        <div class="quiz-progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="quiz-body">
+                    <span class="quiz-question-label" id="qLabel">سؤال 1</span>
+                    <div class="quiz-instruction"> اختر الإجابة الصحيحة</div>
+                    <div class="quiz-question-text" id="qText"></div>
+                    <div class="quiz-options-grid" id="optionsGrid"></div>
+                </div>
+
+                <div class="quiz-footer">
+                    <button class="quiz-btn" style="background:#eee" onclick="navigate(-1)" id="btnPrev">السابق</button>
+                    <button class="quiz-btn btn-next" id="btnNext" onclick="navigate(1)" disabled>التالي</button>
+                </div>
+            </div>
+
+            <div class="quiz-result" id="quizResult">
+                <div class="result-circle" id="resultCircle">
+                    <span id="resultPercent">0%</span>
+                </div>
+                <h3 id="resultTitle" style="font-family:'Amiri', serif; font-size: 24px;"></h3>
+                <p id="resultSub" style="margin-top: 10px; color: #666;"></p>
+            </div>
+        </div>
+    </main>
+    <script>
+
+    const questions = [
+    {
+        text: "1. الغرض من خيار فتح في Excel عند عرض النتائج......................... ",
+        options: [
+            "لتعديل الأسئلة في الاختبار   ",
+            " لتصدير كافة بيانات الاختبار    ",
+            " لحذف النتائج القديمة   ",
+            " لإرسال النتائج بالبريد الإلكتروني   "
+        ],
+        correct: 1
+    },
+    {
+        text: "2.	يتم عرض............. في تبويب الردود في  Microsoft Forms ",
+        options: [
+            "  قائمة بجميع الطلاب دون تفاصيل   ",
+            " ملخص إحصائي يشمل الرسوم البيانية ونسب الإجابات    ",
+            " بيانات الإجابات الفردية فقط      ",
+            "واجهة تعديل الأسئلة     "
+        ],
+        correct: 1
+    },
+    {
+        text: "3.	التبويب الذي يستخدم لعرض نتائج الاختبار في  Microsoft Forms ............  ",
+        options: [
+            "  	التخصيص  ",
+            " الردود ",
+            " التصاميم  ",
+            "الأسئلة  "
+        ],
+        correct: 1
+    }
+];
+
+let current = 0;
+let answers = new Array(questions.length).fill(null);
+
+// الحروف العربية
+const letters = ['أ', 'ب', 'ج', 'د'];
+
+function renderQuestion() {
+    const q = questions[current];
+    const total = questions.length;
+
+    document.getElementById('qText').textContent = q.text;
+    document.getElementById('qLabel').textContent = `سؤال ${current + 1}`;
+    document.getElementById('qCounter').textContent = `السؤال ${current + 1} من ${total}`;
+
+    const pct = Math.round(((current + 1) / total) * 100);
+    document.getElementById('qPercent').textContent = pct + '%';
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    const grid = document.getElementById('optionsGrid');
+    grid.innerHTML = '';
+
+    q.options.forEach((opt, i) => {
+        const div = document.createElement('div');
+        div.className = 'quiz-option' + (answers[current] === letters[i] ? ' selected' : '');
+
+        div.innerHTML = `
+            <span class="option-indicator">${letters[i]}</span>
+            <span>${opt}</span>
+        `;
+
+        div.onclick = () => {
+            answers[current] = letters[i]; // تخزين (أ / ب / ج / د)
+            renderQuestion();
+        };
+
+        grid.appendChild(div);
+    });
+
+    document.getElementById('btnPrev').style.visibility = current === 0 ? 'hidden' : 'visible';
+
+    const btnNext = document.getElementById('btnNext');
+    btnNext.disabled = answers[current] === null;
+    btnNext.textContent = current === total - 1 ? 'إنهاء الاختبار 🏁' : 'التالي ←';
+}
+
+function navigate(dir) {
+    if (dir === 1 && current === questions.length - 1) {
+        showResult();
+        return;
+    }
+    current += dir;
+    renderQuestion();
+}
+
+function showResult() {
+    document.getElementById('quizContent').style.display = 'none';
+    document.getElementById('quizResult').style.display = 'block';
+
+    const correctCount = answers.filter((a, i) => a === questions[i].correct).length;
+    const scorePct = Math.round((correctCount / questions.length) * 100);
+
+    document.getElementById('resultPercent').textContent = scorePct + '%';
+
+    let title = "";
+    let sub = "";
+
+    if (scorePct >= 80) {
+        title = "أداء متميز 🌟";
+        sub = "ممتاز! لديك فهم قوي.";
+    } else if (scorePct >= 50) {
+        title = "أداء جيد 👍";
+        sub = "بداية جيدة، يمكن التحسن أكثر.";
+    } else {
+        title = "تحتاج مراجعة 📚";
+        sub = "راجع المحتوى مرة أخرى.";
+    }
+
+    document.getElementById('resultTitle').textContent = title;
+    document.getElementById('resultSub').textContent = sub;
+}
+
+renderQuestion();
+    </script>
+</body>
+</html>

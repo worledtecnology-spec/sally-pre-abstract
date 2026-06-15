@@ -446,7 +446,7 @@
                 sub   = "لقد أحسنت صنعاً، أنت تمتلك خلفية قوية عن الاختبارات الإلكترونية.";
             } else if (scorePct >= 50) {
                 title = "أداء جيد 👍";
-                sub   = "بداية موفقة، لكن تحتاج إلى مراجعة المحتوى جيداً للانتقال إلى الوحدة الثانية.";
+                sub   = "بداية موفقة، لكن تحتاج إلى مراجعة المحتوى جيداً للانتقال إلى الوحدة الرابعة.";
             } else {
                 title = "تحتاج إلى مزيد من الدراسة 📚";
                 sub   = "راجع محتوى الوحدة بعناية، ثم أعد الاختبار مجدداً.";
@@ -471,7 +471,7 @@
                 /* ❌ رسوب — الزر يبقى مقفلاً */
                 actionsEl.innerHTML = `
                     <div class="result-banner banner-retry">
-                        ⚠️ يجب الحصول على 80% على الأقل للانتقال إلى الوحدة الثانية — راجع المحتوى مرة أخرى
+                        ⚠️ يجب الحصول على 80% على الأقل للانتقال إلى الوحدة الرابعة — راجع المحتوى مرة أخرى
                     </div>
                     <br>
                     <button class="btn-retry" onclick="retryQuiz()">
@@ -486,7 +486,7 @@
             btn.classList.remove('locked');
             btn.classList.add('unlocked');
             document.getElementById('unit2Icon').textContent    = '🔓';
-            document.getElementById('unit2BtnText').textContent = 'الوحدة الثانية ✨';
+            document.getElementById('unit2BtnText').textContent = ' الوحدة الرابعة ✨';
         }
 
         /* ---- إعادة الاختبار ---- */

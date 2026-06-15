@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بيئة تدريب مصغر - الإنفوجرافيك التفاعلي المقيد</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0b1f3a;
+            --navy-light: #1a3e72;
+            --gold: #b8860b;
+            --gold-light: #d4a017;
+            --cream: #faf7f0;
+            --white: #ffffff;
+            --accent-teal: #145a67;
+            --teal: #15a07a;
+            --tealm: #15a07a;
+            --tealp: #d4f5eb;
+            --border: rgba(184, 134, 11, 0.2);
+            --goldm: #d4a017;
+            --goldl: #f0c040;
+            --surf: #f0f4fa;
+            --ease: cubic-bezier(.4,0,.2,1);
+            --r8: 8px;
+            --r14: 14px;
+            --r22: 22px;
+            --shl: 0 8px 32px rgba(11,31,58,0.13);
+            --shm: 0 4px 18px rgba(11,31,58,0.10);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: 'Cairo', sans-serif;
+            background: var(--surf);
+        }
+
+        /* TOP HEADER */
+        .top-header {
+            background: var(--navy);
+            color: var(--gold-light);
+            text-align: center;
+            padding: 3px 0;
+            font-size: 15px;
+            font-weight: 600;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        /* MAIN NAV */
+        .main-nav {
+            background: var(--white);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 1px;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 2px 2px;
+            background: var(--cream);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item span { font-size: 16px; font-weight: 800; }
+
+        .nav-item:hover {
+            background: var(--navy);
+            color: var(--gold-light);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(11, 31, 58, 0.15);
+        }
+
+        /* EDUCATION NAV */
+        .education-nav {
+            background: var(--accent-teal);
+            padding: 20px 0;
+            border-bottom: 3px solid var(--gold);
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Amiri', serif;
+            font-size: 24px;
+            color: var(--white);
+            margin-bottom: 2px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 20%;
+            width: 60%;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 2px;
+        }
+
+        .edu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 0 3px;
+        }
+
+        .edu-icon { 
+    font-size: 13px; /* تصغير الأيقونة قليلاً لتناسب السطر */
+}
+
+.edu-text { 
+    font-size: 13px; /* تكبير النص قليلاً للوضوح */
+    font-weight: 700; 
+    text-align: right; 
+    white-space: nowrap; /* منع النص من الانقسام لسطرين */
+}
+        .edu-item {
+            text-decoration: none;
+            color: var(--white);
+            display: flex;
+            /* تغيير الاتجاه ليكون أفقي بدلاً من عمودي */
+            flex-direction: row; 
+            align-items: center;
+            /* إضافة مسافة بين الأيقونة والنص */
+            gap: 1px; 
+            padding: 1px 15px;
+            /* إزالة الحد الأدنى للعرض أو تعديله ليتناسب مع التصميم الأفقي */
+            min-width: auto; 
+            background: rgba(255,255,255,0.1);
+            border-radius: 13px;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+
+        .edu-item:not(.disabled):hover {
+            background: var(--gold);
+            transform: translateY(-3px);
+            border-color: var(--white);
+        }
+
+        .edu-item.active-summary {
+            background: var(--gold);
+            border-color: var(--white);
+            box-shadow: 0 0 15px rgba(184,134,11,0.5);
+        }
+
+        .edu-item.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            background: rgba(0,0,0,0.2);
+            color: #ccc;
+        }
+
+        .edu-icon { font-size: 22px; }
+        .edu-text { font-size: 11px; font-weight: 700; text-align: center; }
+
+        /* INFO SECTION */
+        .info-section { flex:1; padding: 5px 10px 5px; background: var(--surf); }
+        .info-hdr { text-align: center; margin-bottom: 3px; }
+        .info-title { font-family: 'Amiri', serif; font-size: 24px; color: var(--navy); margin-bottom: 6px; }
+        .info-instr { font-size: 14px; color: #3a5070; font-weight: 600; transition: all .4s ease; }
+        .info-instr.done { color: var(--teal); }
+
+        /* PROGRESS PIPS */
+        .spips { display: flex; justify-content: center; gap: 7px; margin-top: 9px; }
+        .spip { width: 30px; height: 3px; border-radius: 3px; background: rgba(184,134,11,.18); transition: all .35s ease; }
+        .spip.done { background: var(--gold); }
+
+        /* SVG BOX */
+        .info-box { position: relative; max-width: 500px; margin: 0 auto; }
+        .info-svg { width: 100%; height: auto; display: block; border-radius: 20px; box-shadow: var(--shl); }
+
+        /* ANIMATIONS */
+        @keyframes dashFlow { to { stroke-dashoffset: -28; } }
+        @keyframes orbSpin { to { transform: rotate(360deg); } }
+        .flow-line { animation: dashFlow 2.2s linear infinite; }
+        #orbit { transform-origin: 400px 255px; animation: orbSpin 18s linear infinite; }
+
+        /* HOTSPOT BUTTONS */
+        @keyframes hsPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(212,160,23,.7); }
+            70%  { box-shadow: 0 0 0 14px rgba(212,160,23,0); }
+            100% { box-shadow: 0 0 0 0 rgba(212,160,23,0); }
+        }
+        @keyframes hsDonePulse {
+            0%   { box-shadow: 0 0 0 0 rgba(21,160,122,.6); }
+            70%  { box-shadow: 0 0 0 11px rgba(21,160,122,0); }
+            100% { box-shadow: 0 0 0 0 rgba(21,160,122,0); }
+        }
+
+        .hs {
+            position: absolute;
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            border: 2.5px solid rgba(255,255,255,.92);
+            background: var(--goldm);
+            color: #fff;
+            font-weight: 800; font-size: 14px;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all .28s ease;
+            z-index: 10;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 16px rgba(13,27,53,.4);
+            animation: hsPulse 2.4s infinite;
+            transform: translate(-50%,-50%);
+            outline: none;
+        }
+        .hs:hover { transform: translate(-50%,-50%) scale(1.15); background: var(--navy); animation: none; }
+        .hs.done {
+            background: var(--tealm);
+            animation: hsDonePulse 3s infinite;
+            cursor: default;
+            font-size: 19px;
+        }
+        .hs.done:hover { transform: translate(-50%,-50%); background: var(--tealm); }
+
+        .hs1 { left: 18.75%; top: 28.8%; }
+        .hs2 { left: 81.25%; top: 28.8%; }
+
+        /* SUCCESS BANNER */
+        .succ {
+            display: none;
+            max-width: 700px;
+            margin: 5px auto 0;
+            background: linear-gradient(135deg, var(--tealp), #c8f0e6);
+            border: 1.5px solid var(--tealm);
+            border-radius: var(--r14);
+            padding: 3px 24px;
+        }
+        .succ.show {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            animation: succIn .5s cubic-bezier(.34,1.56,.64,1) forwards;
+        }
+        @keyframes succIn { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
+        .succ-icon { font-size: 30px; flex-shrink: 0; }
+        .succ-t { font-size: 14.5px; font-weight: 700; color: var(--teal); }
+
+        /* ════════════════════════════════════
+           MODAL OVERLAY
+        ════════════════════════════════════ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.78);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.open { display: flex; animation: fadeIn .3s ease; }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+        .modal-box {
+            background: var(--white);
+            border-radius: 22px;
+            width: 100%;
+            max-width: 680px;
+            max-height: 92vh;
+            overflow-y: auto;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+            animation: slideUp .35s cubic-bezier(.34,1.4,.64,1);
+        }
+        @keyframes slideUp { from { transform: translateY(40px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 26px 16px;
+            border-bottom: 2px solid var(--border);
+        }
+        .modal-header-left { display: flex; align-items: center; gap: 12px; }
+        .modal-badge {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; font-weight: 900;
+            font-family: 'Cairo', sans-serif;
+            color: #fff; flex-shrink: 0;
+        }
+        .modal-title { font-family: 'Amiri', serif; font-size: 20px; color: var(--navy); font-weight: 700; }
+        .modal-subtitle { font-size: 12px; color: #7a8fa8; font-weight: 600; margin-top: 2px; }
+
+        .modal-body { padding: 22px 26px; }
+
+        /* Video wrapper 16:9 */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 14px;
+            background: #000;
+            margin-bottom: 18px;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
+
+        /* Image wrapper */
+        .image-wrapper {
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 18px;
+            border: 2px solid var(--border);
+            background: var(--cream);
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-wrapper img {
+            width: 100%;
+            display: block;
+        }
+        /* Placeholder when no image */
+        .img-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            padding: 40px;
+            color: #7a8fa8;
+            text-align: center;
+        }
+        .img-placeholder-icon { font-size: 64px; opacity: 0.5; }
+        .img-placeholder-text { font-size: 14px; font-weight: 700; line-height: 1.6; }
+
+        .modal-footer {
+            padding: 16px 26px 22px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        /* Timer bar */
+        .timer-wrap { flex: 1; min-width: 160px; }
+        .timer-label { font-size: 12px; color: #7a8fa8; font-weight: 700; margin-bottom: 5px; display: flex; justify-content: space-between; }
+        .timer-bar { height: 6px; background: rgba(184,134,11,.15); border-radius: 3px; overflow: hidden; }
+        .timer-fill {
+            height: 100%;
+            border-radius: 3px;
+            width: 0%;
+            transition: width .1s linear;
+        }
+
+        /* Confirm button */
+        .confirm-btn {
+            padding: 13px 30px;
+            border: none;
+            border-radius: var(--r8);
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            color: #fff;
+            cursor: pointer;
+            transition: all .25s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+        .confirm-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none !important;
+            filter: none !important;
+        }
+        .confirm-btn:not(:disabled):hover {
+            filter: brightness(.88);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.22);
+        }
+
+        /* FOOTER */
+        .main-footer {
+            background: var(--navy);
+            color: rgba(255,255,255,.45);
+            text-align: center;
+            padding: 10px;
+            border-top: 2px solid var(--gold);
+            font-size: 11px;
+            margin-top: auto;
+        }
+        .footer-name { color: var(--gold-light); font-weight: 700; }
+
+        @media (max-width: 640px) {
+            .hs { width: 38px; height: 38px; font-size: 12px; }
+            .edu-item { min-width: 82px; }
+            .modal-box { border-radius: 16px; }
+            .modal-header, .modal-body, .modal-footer { padding-left: 16px; padding-right: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+   <div class="top-header">
+    بيئة تدريب مصغر لتنمية مهارات تصميم الاختبارات الإلكترونية وكفاءة الذات المهنية لدى معلمي المرحلة الإعدادية
+
+    <span style="
+        position: absolute;
+        left: 20px;
+        background: var(--gold);
+        color: var(--navy);
+        font-size: 13px;
+        font-weight: 900;
+        padding: 4px 14px;
+        border-radius: 20px;
+        letter-spacing: 0.3px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        white-space: nowrap;
+    ">✦ بيئة تدريب مصغر — ملخص قبلي</span>
+</div>
+
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-item">🏠 <span>الرئيسية</span></a>
+            <a href="../mods.html" class="nav-item">📚 <span>المحتوى</span></a>
+            <a href="../instruction.html" class="nav-item">📜 <span>التعليمات</span></a>
+            <a href="../contact.html" class="nav-item">✉️ <span>التواصل</span></a>
+        </div>
+    </nav>
+
+    <div class="education-nav">
+        <h1 class="section-title">الموضوع الخامس</h1>
+        <div class="edu-container">
+            <a href="#" class="edu-item active-summary" id="summary-link">
+                <span class="edu-icon">📌</span>
+                <span class="edu-text">ملخص الوحدة</span>
+            </a>
+            <a href="t5unit5.html" class="edu-item disabled locked-item">
+                <span class="edu-icon">🎯</span>
+                <span class="edu-text">عنوان الوحدة</span>
+            </a>
+            <a href="#" class="edu-item disabled locked-item">
+                <span class="edu-icon">🎯</span>
+                <span class="edu-text">الهدف من الدراسة</span>
+            </a>
+            <a href="#" class="edu-item disabled locked-item">
+                <span class="edu-icon">📝</span>
+                <span class="edu-text">الاختبار القبلي</span>
+            </a>
+            <a href="#" class="edu-item disabled locked-item">
+                <span class="edu-icon">📖</span>
+                <span class="edu-text">محتوى الوحدة</span>
+            </a>
+            <a href="#" class="edu-item disabled locked-item">
+                <span class="edu-icon">🧠</span>
+                <span class="edu-text">التقويم الذاتي</span>
+            </a>
+            <a href="#" class="edu-item disabled locked-item">
+                <span class="edu-icon">🧩</span>
+                <span class="edu-text">النشاط التعليمي</span>
+            </a>
+            <a href="#" class="edu-item disabled locked-item">
+                <span class="edu-icon">🏆</span>
+                <span class="edu-text">الاختبار البعدي</span>
+            </a>
+        </div>
+    </div>
+
+    <main class="info-section">
+        <div class="info-hdr">
+            <h2 class="info-title">إنفوجرافيك تفاعلي</h2>
+            <p class="info-instr" id="instr">اضغط على الأزرار المضيئة لاستكشاف ملخص عن عناصر الوحدة</p>
+            <div class="spips">
+                <div class="spip" id="pip1"></div>
+                <div class="spip" id="pip2"></div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <svg class="info-svg" viewBox="0 0 800 510" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <pattern id="dots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+                        <circle cx="14" cy="14" r="1.1" fill="rgba(255,255,255,0.055)"/>
+                    </pattern>
+                    <linearGradient id="g-gold" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#2e1900"/>
+                        <stop offset="100%" stop-color="#1a0e00"/>
+                    </linearGradient>
+                    <linearGradient id="g-blue" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#071c40"/>
+                        <stop offset="100%" stop-color="#040d20"/>
+                    </linearGradient>
+                    <marker id="arr-g" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+                        <path d="M 0 0 L 8 4 L 0 8 z" fill="#b8860b" opacity="0.55"/>
+                    </marker>
+                    <marker id="arr-b" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+                        <path d="M 0 0 L 8 4 L 0 8 z" fill="#2980d4" opacity="0.55"/>
+                    </marker>
+                </defs>
+
+                <rect width="800" height="510" rx="20" fill="#0d1b35"/>
+                <rect width="800" height="510" rx="20" fill="url(#dots)"/>
+                <ellipse cx="400" cy="258" rx="310" ry="210" fill="rgba(26,58,110,0.3)"/>
+                <circle cx="400" cy="258" r="198" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="1.5"/>
+                <circle cx="400" cy="258" r="265" fill="none" stroke="rgba(255,255,255,0.018)" stroke-width="1"/>
+
+                <rect x="180" y="14" width="540" height="45" rx="11" fill="rgba(21,38,80,0.9)" stroke="rgba(212,160,23,0.3)" stroke-width="1"/>
+                <text x="400" y="45" text-anchor="middle" fill="#d4a017" font-family="'Amiri',serif" font-size="26" font-weight="700">الإنفوجرافيك التفاعلي للوحدة المصغرة الخامسة</text>
+
+                <path class="flow-line" d="M 330,222 C 268,200 215,180 168,164" fill="none" stroke="#b8860b" stroke-width="2" stroke-dasharray="9 6" opacity="0.6" marker-end="url(#arr-g)"/>
+                <path class="flow-line" d="M 470,222 C 532,200 585,180 632,164" fill="none" stroke="#2980d4" stroke-width="2" stroke-dasharray="9 6" opacity="0.6" marker-end="url(#arr-b)"/>
+
+                <circle cx="249" cy="193" r="3.5" fill="#b8860b" opacity="0.5"/>
+                <circle cx="551" cy="193" r="3.5" fill="#2980d4" opacity="0.5"/>
+
+                <circle id="orbit" cx="700" cy="458" r="92" fill="none" stroke="rgba(212,160,23,0.1)" stroke-width="1.5" stroke-dasharray="5 8"/>
+                <circle cx="400" cy="258" r="82" fill="none" stroke="#d4a017" stroke-width="7"/>
+                <circle cx="400" cy="258" r="73" fill="#152650"/>
+                <circle cx="400" cy="258" r="65" fill="none" stroke="rgba(212,160,23,0.18)" stroke-width="1"/>
+
+                <text x="400" y="244" text-anchor="middle" fill="#d4a017" font-family="'Amiri',serif" font-size="22" font-weight="700">الاختبارات</text>
+                <text x="400" y="278" text-anchor="middle" fill="#d4a017" font-family="'Amiri',serif" font-size="22" font-weight="700">الإلكترونية</text>
+
+                <circle cx="400" cy="166" r="5" fill="#d4a017" opacity="0.55"/>
+                <circle cx="320" cy="327" r="4.5" fill="#d4a017" opacity="0.45"/>
+                <circle cx="480" cy="327" r="4.5" fill="#d4a017" opacity="0.45"/>
+
+                <!-- NODE 1 – Gold (Infographic) -->
+                <rect x="30" y="68" width="220" height="163" rx="12" fill="rgba(184,134,11,0.1)" stroke="rgba(184,134,11,0.22)" stroke-width="6"/>
+                <rect x="30" y="74" width="220" height="151" rx="17" fill="url(#g-gold)" stroke="#b8860b" stroke-width="6.5"/>
+                <rect x="30" y="74" width="220" height="38" rx="17" fill="#8a6000"/>
+                <rect x="30" y="90" width="220" height="22" fill="#8a6000"/>
+                <rect x="30" y="81" width="26" height="17" rx="5" fill="rgba(255,255,255,0.18)"/>
+                <text x="130" y="99" text-anchor="middle" fill="rgba(255,255,255,0.88)" font-family="'Cairo'" font-size="18" font-weight="700">انفوجرافيك ملخص</text>
+
+                <!-- NODE 2 – Blue (Video) -->
+                <rect x="562" y="68" width="220" height="163" rx="12" fill="rgba(30,95,168,0.1)" stroke="rgba(30,95,168,0.22)" stroke-width="6"/>
+                <rect x="562" y="74" width="220" height="151" rx="17" fill="url(#g-blue)" stroke="#1e5fa8" stroke-width="6.5"/>
+                <rect x="562" y="74" width="220" height="38" rx="17" fill="#1e5fa8"/>
+                <rect x="562" y="90" width="220" height="22" fill="#1e5fa8"/>
+                <rect x="562" y="81" width="220" height="17" rx="5" fill="rgba(255,255,255,0.18)"/>
+                <text x="672" y="99" text-anchor="middle" fill="rgba(255,255,255,0.88)" font-family="'Cairo'" font-size="18" font-weight="700">فيديو ملخص</text>
+            </svg>
+
+            <!-- HOTSPOT BUTTONS -->
+            <!-- hs1 = الانفوجرافيك (زر 01) - Node on the LEFT side of SVG = left: 18.75% -->
+            <button class="hs hs1" id="hs1" onclick="openModal(1)" aria-label="عرض انفوجرافيك الملخص">1</button>
+            <!-- hs2 = الفيديو (زر 02) - Node on the RIGHT side of SVG = left: 81.25% -->
+            <button class="hs hs2" id="hs2" onclick="openModal(2)" aria-label="عرض فيديو الملخص">2</button>
+        </div>
+
+        <!-- SUCCESS BANNER -->
+        <div class="succ" id="succ">
+            <span class="succ-icon">🏆</span>
+            <p class="succ-t">أحسنت! اطلعت على الملخص كاملاً — تم تفعيل جميع عناصر الوحدة. يمكنك الانتقال إليها الآن.</p>
+        </div>
+    </main>
+
+    <!-- ════════════════════════════════════════════
+         MODAL – INFOGRAPHIC (id=1)
+    ════════════════════════════════════════════ -->
+    <div class="modal-overlay" id="modal-1">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-header-left">
+                    <div class="modal-badge" style="background:#b8860b;">1</div>
+                    <div>
+                        <div class="modal-title">انفوجرافيك الملخص</div>
+                        <div class="modal-subtitle">يرجى الاطلاع على الإنفوجرافيك كاملاً ثم الضغط على تأكيد الاطلاع</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="image-wrapper" id="infographic-container">
+                    <!-- ضع رابط صورة الانفوجرافيك هنا بدلاً من النص التوضيحي -->
+                    <div class="img-placeholder">
+                        <div class="img-placeholder-icon">🖼️</div>
+                        <div class="img-placeholder-text">
+                            انفوجرافيك ملخص الوحدة<br>
+                            <span style="font-size:11px; opacity:.6;">(ضع رابط صورة الانفوجرافيك في متغير <code>INFOGRAPHIC_SRC</code> في الكود)</span>
+                        </div>
+                    </div>
+                    <!-- سيتم استبدال المحتوى أعلاه تلقائياً إذا كان رابط الصورة محدداً -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="timer-wrap">
+                    <div class="timer-label">
+                        <span>تقدم الاطلاع</span>
+                        <span id="timer-txt-1">انتظر...</span>
+                    </div>
+                    <div class="timer-bar">
+                        <div class="timer-fill" id="timer-fill-1" style="background:#b8860b;"></div>
+                    </div>
+                </div>
+                <button class="confirm-btn" id="confirm-btn-1" style="background:#b8860b;" disabled onclick="confirmView(1)">
+                    <span id="confirm-icon-1">⏳</span>
+                    <span id="confirm-txt-1">يرجى الانتظار...</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+         MODAL – VIDEO (id=2)
+    ════════════════════════════════════════════ -->
+    <div class="modal-overlay" id="modal-2">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-header-left">
+                    <div class="modal-badge" style="background:#1e5fa8;">2</div>
+                    <div>
+                        <div class="modal-title">فيديو الملخص</div>
+                        <div class="modal-subtitle">يرجى مشاهدة الفيديو ثم الضغط على تأكيد الاطلاع</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="video-wrapper">
+                    <!-- غيّر الرابط هنا إلى فيديو يوتيوب الخاص بك -->
+                    <iframe id="video-frame"
+                        src="about:blank"
+                        data-src="https://www.youtube.com/embed/g4dfSkzjJN4?si=mKrgriLvJ-OLG9VP"
+                        allowfullscreen
+                        allow="autoplay; encrypted-media">
+                    </iframe>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="timer-wrap">
+                    <div class="timer-label">
+                        <span>وقت الانتظار</span>
+                        <span id="timer-txt-2">انتظر...</span>
+                    </div>
+                    <div class="timer-bar">
+                        <div class="timer-fill" id="timer-fill-2" style="background:#1e5fa8;"></div>
+                    </div>
+                </div>
+                <button class="confirm-btn" id="confirm-btn-2" style="background:#1e5fa8;" disabled onclick="confirmView(2)">
+                    <span id="confirm-icon-2">⏳</span>
+                    <span id="confirm-txt-2">يرجى الانتظار...</span>
+                </button>
+            </div>
+        </div>
+    </div>
+<script>
+    // ══════════════════════════════════════════
+    //  ⚙️  إعدادات — عدّل هنا فقط
+    // ══════════════════════════════════════════
+    const INFOGRAPHIC_SRC = '../img/t5u5.png'; // ضع رابط صورة الانفوجرافيك هنا، مثال: 'infographic.jpg'
+    const VIDEO_EMBED_URL  = 'https://www.youtube.com/embed/g4dfSkzjJN4?si=mKrgriLvJ-OLG9VP'; // رابط تضمين يوتيوب
+
+    // وقت الانتظار قبل تفعيل زر التأكيد (بالثواني)
+    const WAIT_SECONDS = { 1: 8, 2: 10 };
+    // ══════════════════════════════════════════
+
+    const viewed   = { 1: false, 2: false };
+    let   timers   = {};
+
+    // تهيئة صورة الانفوجرافيك إذا كان الرابط محدداً
+    if (INFOGRAPHIC_SRC) {
+        document.getElementById('infographic-container').innerHTML =
+            `<img src="${INFOGRAPHIC_SRC}" alt="انفوجرافيك الملخص" onerror="this.parentNode.innerHTML='<div class=img-placeholder><div class=img-placeholder-icon>⚠️</div><div class=img-placeholder-text>تعذّر تحميل الصورة</div></div>'">`;
+    }
+
+    function openModal(id) {
+        if (viewed[id]) return; // سبق الاطلاع
+
+        // تحميل الفيديو عند الفتح فقط (لتفادي التشغيل التلقائي)
+        if (id === 2) {
+            const frame = document.getElementById('video-frame');
+            if (frame.src === 'about:blank') {
+                frame.src = frame.dataset.src || VIDEO_EMBED_URL;
+            }
+        }
+
+        document.getElementById('modal-' + id).classList.add('open');
+        document.body.style.overflow = 'hidden';
+
+        startTimer(id);
+    }
+
+    function startTimer(id) {
+        const total   = WAIT_SECONDS[id];
+        const fill    = document.getElementById('timer-fill-' + id);
+        const txt     = document.getElementById('timer-txt-' + id);
+        const btn     = document.getElementById('confirm-btn-' + id);
+        const icon    = document.getElementById('confirm-icon-' + id);
+        const label   = document.getElementById('confirm-txt-' + id);
+
+        let elapsed = 0;
+        clearInterval(timers[id]);
+
+        timers[id] = setInterval(() => {
+            elapsed += 0.1;
+            const pct = Math.min((elapsed / total) * 100, 100);
+            fill.style.width = pct + '%';
+
+            const remaining = Math.ceil(total - elapsed);
+            if (remaining > 0) {
+                txt.textContent   = `${remaining} ث متبقية`;
+                label.textContent = `يرجى الانتظار (${remaining}ث)...`;
+            } else {
+                clearInterval(timers[id]);
+                txt.textContent   = 'جاهز ✓';
+                label.textContent = 'تأكيد الاطلاع';
+                icon.textContent  = '✓';
+                btn.disabled      = false;
+            }
+        }, 100);
+    }
+
+    function confirmView(id) {
+        viewed[id] = true;
+
+        // إيقاف الفيديو عند الإغلاق (عبر إعادة تحميل الـ src)
+        if (id === 2) {
+            const frame = document.getElementById('video-frame');
+            const savedSrc = frame.src;
+            frame.src = 'about:blank';
+            // لاحقاً عند إعادة الفتح، سيُعاد التحميل من data-src
+            frame.dataset.src = savedSrc;
+        }
+
+        // إغلاق المودال
+        document.getElementById('modal-' + id).classList.remove('open');
+        document.body.style.overflow = '';
+
+        // تعليم الزر كمكتمل
+        const btn = document.getElementById('hs' + id);
+        btn.classList.add('done');
+        btn.textContent = '✓';
+
+        // تحديث النقطة
+        document.getElementById('pip' + id).classList.add('done');
+
+        checkCompletion();
+    }
+
+    function checkCompletion() {
+        if (viewed[1] && viewed[2]) {
+            // فتح عناصر الوحدة
+            document.querySelectorAll('.locked-item').forEach(el => {
+                el.classList.remove('disabled', 'locked-item');
+            });
+            // إظهار رسالة النجاح
+            document.getElementById('succ').classList.add('show');
+            const instr = document.getElementById('instr');
+            instr.textContent = '🏆 أحسنت! تم تفعيل جميع عناصر الوحدة';
+            instr.classList.add('done');
+        }
+    }
+
+    // إغلاق المودال عند الضغط على الخلفية (منع الإغلاق إذا لم يكتمل الوقت)
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === this) {
+                const id = parseInt(this.id.split('-')[1]);
+                // لا نسمح بالإغلاق إلا إذا أصبح الزر مفعّلاً
+                const btn = document.getElementById('confirm-btn-' + id);
+                if (!btn.disabled) {
+                    // يمكن الإغلاق بدون تأكيد فقط إذا أُكمل الوقت
+                    // لكن نمنع ذلك لإجبار المستخدم على الضغط على زر التأكيد
+                    // يمكنك حذف هذا التعليق وإزالة الشرط إذا أردت السماح بالإغلاق
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

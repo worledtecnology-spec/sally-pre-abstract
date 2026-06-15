@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بيئة تدريب مصغر - الوحدة الأولى</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0b1f3a;
+            --navy-light: #1a3e72;
+            --gold: #b8860b;
+            --gold-light: #d4a017;
+            --cream: #faf7f0;
+            --white: #ffffff;
+            --accent-teal: #145a67;
+            --border: rgba(184, 134, 11, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--cream);
+            color: var(--navy);
+            line-height: 1.6;
+            direction: rtl;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .top-header {
+            background: var(--navy);
+            color: var(--gold-light);
+            text-align: center;
+            padding: 12px 0;
+            font-size: 15px;
+            font-weight: 600;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .main-nav {
+            background: var(--white);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 20px;
+            background: var(--cream);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .icon-symbol {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: var(--navy);
+            color: var(--gold-light);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(11, 31, 58, 0.15);
+        }
+
+        .nav-item:hover .icon-symbol {
+            transform: scale(1.2);
+        }
+
+        .education-nav {
+            background: var(--accent-teal);
+            padding: 15px 0;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .edu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .edu-icon { 
+    font-size: 13px; /* تصغير الأيقونة قليلاً لتناسب السطر */
+}
+
+.edu-text { 
+    font-size: 13px; /* تكبير النص قليلاً للوضوح */
+    font-weight: 700; 
+    text-align: right; 
+    white-space: nowrap; /* منع النص من الانقسام لسطرين */
+}
+        .edu-item {
+            text-decoration: none;
+            color: var(--white);
+            display: flex;
+            /* تغيير الاتجاه ليكون أفقي بدلاً من عمودي */
+            flex-direction: row; 
+            align-items: center;
+            /* إضافة مسافة بين الأيقونة والنص */
+            gap: 1px; 
+            padding: 1px 15px;
+            /* إزالة الحد الأدنى للعرض أو تعديله ليتناسب مع التصميم الأفقي */
+            min-width: auto; 
+            background: rgba(255,255,255,0.1);
+            border-radius: 13px;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+
+        .edu-item:hover {
+            background: var(--gold);
+            transform: translateY(-3px);
+            border-color: var(--white);
+        }
+
+        .edu-icon { font-size: 24px; }
+        .edu-text { font-size: 11px; font-weight: 700; text-align: center; }
+
+        .section-title {
+            position: relative;
+            text-align: center;
+            font-family: 'Amiri', serif;
+            font-size: 22px;
+            color: #faf7f0;
+            margin: 1px auto 9px;
+            padding-bottom: 1px;
+            width: fit-content;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            border-radius: 2px;
+        }
+
+        .section-title:hover {
+            color: var(--gold);
+            transition: 0.3s;
+        }
+
+        /* الحاوية الرئيسية */
+        .unit-hero-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 3px 3px;
+        }
+
+        :root {
+            --navy: #0b1f3a;
+            --gold: #b8860b;
+            --gold-light: #d4a017;
+            --cream: #faf7f0;
+            --white: #ffffff;
+            --accent-teal: #145a67;
+            --border: rgba(184, 134, 11, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--cream);
+            color: var(--navy);
+            direction: rtl;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .top-header {
+            background: var(--navy);
+            color: var(--gold-light);
+            text-align: center;
+            padding: 8px 0;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .main-nav {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 8px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 15px;
+            background: var(--cream);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .education-nav {
+            background: var(--accent-teal);
+            padding: 10px 0;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .edu-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+
+        .section-title {
+            text-align: center;
+            font-family: 'Amiri', serif;
+            font-size: 20px;
+            color: #faf7f0;
+            margin-bottom: 5px;
+        }
+
+        .wide-container {
+            padding: 5px;
+            max-width: 98%; /* استغلال عرض الشاشة */
+            margin: 0 auto;
+        }
+
+        .horizontal-card {
+            background: var(--white);
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            min-height: 200px;
+        }
+
+        .card-header-horizontal {
+            background: var(--navy);
+            padding: 12px;
+            text-align: center;
+            border-bottom: 3px solid var(--gold);
+            border-radius: 15px 15px 0 0;
+        }
+
+        .card-header-horizontal h2 {
+            font-family: 'Amiri', serif;
+            color: var(--gold-light);
+            font-size: 22px;
+        }
+
+        /* حاوية الأعمدة الأفقية */
+        .columns-wrapper {
+            display: flex;
+            flex-wrap: wrap; /* للسماح بالنزول في الشاشات الصغيرة */
+            gap: 20px;
+            padding: 16px;
+            flex: 1;
+        }
+
+        .content-col {
+            flex: 1; /* توزيع الأعمدة بالتساوي */
+            min-width: 280px; /* ضمان عدم صغر العمود جداً */
+            background: rgba(255, 255, 255, 0.5);
+            padding: 3px;
+            border-radius: 10px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .col-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: var(--accent-teal);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--gold-light);
+            padding-bottom: 5px;
+            font-size: 15px;
+        }
+
+        .text-p {
+            font-size: 14px;
+            line-height: 1.7;
+            text-align: justify;
+            color: #444;
+        }
+
+        /* تنسيق قائمة المميزات بشكل مضغوط */
+        .feature-grid-small {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .feature-item-small {
+            background: var(--cream);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            border-right: 3px solid var(--gold);
+        }
+
+        /* صندوق التعريف المتميز */
+        .def-highlight {
+            background: var(--navy);
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 3px;
+        }
+
+        .def-highlight b { color: var(--gold-light); }
+
+        .card-footer-small {
+            padding: 4px 20px;
+            background: #fdfdfd;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .btn-sm {
+            background: var(--navy);
+            color: var(--gold-light);
+            padding: 6px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* إخفاء السكرول في الشاشات الكبيرة عبر توزيع المحتوى */
+        @media (min-width: 1024px) {
+            .horizontal-card {
+                max-height: 90vh; /* تحديد ارتفاع أقصى لمنع السكرول الطويل */
+            }
+        }
+
+        /* تحويل الأعمدة إلى صفوف في الموبايل */
+        @media (max-width: 768px) {
+            .columns-wrapper { flex-direction: column; }
+            .content-col { min-width: 100%; }
+        }
+
+        .main-footer {
+            background: var(--navy);
+            color: var(--white);
+            text-align: center;
+            padding: 3px 0;
+            font-size: 12px;
+            color: var(--gold-light); font-weight: 700;
+        }
+  
+
+
+        /* === كارت الفيديو === */
+        .card-body-wrapper {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        }
+        .text-columns-side {
+            flex: 1;
+            min-width: 0;
+        }
+        .video-side {
+            flex: 0 0 300px;
+            background: var(--navy);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border-right: 3px solid var(--gold);
+        }
+        .video-side-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gold-light);
+            font-weight: 700;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(184,134,11,0.4);
+            padding-bottom: 8px;
+        }
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid rgba(184,134,11,0.3);
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
+        .video-desc {
+            color: rgba(255,255,255,0.75);
+            font-size: 12px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        .video-badge {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--navy);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 0 auto;
+            width: fit-content;
+        }
+        @media (max-width: 900px) {
+            .card-body-wrapper { flex-direction: column; }
+            .video-side {
+                flex: none;
+                width: 100%;
+                border-right: none;
+                border-top: 3px solid var(--gold);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-header">
+    بيئة تدريب مصغر لتنمية مهارات تصميم الاختبارات الإلكترونية وكفاءة الذات المهنية لدى معلمي المرحلة الإعدادية
+
+    <span style="
+        position: absolute;
+        left: 20px;
+        background: var(--gold);
+        color: var(--navy);
+        font-size: 13px;
+        font-weight: 900;
+        padding: 4px 14px;
+        border-radius: 20px;
+        letter-spacing: 0.3px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        white-space: nowrap;
+    ">✦ بيئة تدريب مصغر — ملخص قبلي</span>
+</div>
+
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-item" target="_self">
+                <span class="icon-symbol">🏠</span>
+                <span>الصفحة الرئيسية</span>
+            </a>
+            <a href="../mods.html" class="nav-item" target="_self">
+                <span class="icon-symbol">📚</span>
+                <span>المحتوى التعليمي</span>
+            </a>
+            <a href="../instruction.html" class="nav-item" target="_self">
+                <span class="icon-symbol">📜</span>
+                <span>التعليمات</span>
+            </a>
+            <a href="../contact.html" class="nav-item" target="_self>
+                <span class="icon-symbol">✉️</span>
+                <span>التواصل</span>
+            </a>
+        </div>
+    </nav>
+    <div class="education-nav">
+        <h1 class="section-title">الموضوع الخامس</h1>
+        <div class="edu-container">
+             <a href="#" class="edu-item" target="_self">
+                <span class="edu-icon"></span>
+                <span class="edu-text">ملخص الوحدة</span>
+            </a>
+            <a href="#" class="edu-item" target="_self"> 
+                <span class="edu-icon">📌</span>
+                <span class="edu-text">عنوان الوحدة</span>
+            </a>
+            <a href="t5unit3aims.html" class="edu-item" target="_self">
+                <span class="edu-icon">🎯</span>
+                <span class="edu-text">الهدف من الدراسة</span>
+            </a>
+            <a href="#" class="edu-item" target="_self">
+                <span class="edu-icon">📝</span>
+                <span class="edu-text">الاختبار القبلي</span>
+            </a>
+            <a href="#" class="edu-item" target="_self">
+                <span class="edu-icon">📖</span>
+                <span class="edu-text">محتوى الوحدة</span>
+            </a>
+            <a href="t5unit3selftest.html" class="edu-item" target="_self">
+                <span class="edu-icon">🧠</span>
+                <span class="edu-text">التقويم الذاتي</span>
+            </a>
+            <a href="#" class="edu-item" target="_self">
+                <span class="edu-icon">🧩</span>
+                <span class="edu-text">النشاط التعليمي</span>
+            </a>
+            <a href="#" class="edu-item" target="_self">
+                <span class="edu-icon">🏆</span>
+                <span class="edu-text">الاختبار البعدي</span>
+            </a>
+        </div>
+    </div>
+    <div class="wide-container">
+    <div class="horizontal-card">
+        <div class="card-header-horizontal">
+            <h2>الوحدة التعليمية المصغرة الثالثة: كتابة تعليمات الاختبار بطريقة واضحة  </h2>
+        </div>
+
+        <div class="card-body-wrapper">
+        <div class="text-columns-side">
+            <div class="columns-wrapper">
+            
+    <!-- العمود الأول: فوائد التعليمات الواضحة -->
+    <section class="content-col">
+        <div class="col-title"><span>✅</span> فوائد التعليمات الواضحة</div>
+        <p class="text-p">تساعد التعليمات الواضحة في:</p>
+        <div class="feature-grid-small">
+            <div class="feature-item-small">📌 توضيح طريقة الإجابة على الأسئلة</div>
+            <div class="feature-item-small">⏱️ تحديد زمن الاختبار وأسلوب التقييم</div>
+            <div class="feature-item-small">🚫 تجنب اللبس وسوء الفهم بين الممتحنين</div>
+            <div class="feature-item-small">🎯 تحسين تجربة الطالب أثناء الاختبار</div>
+        </div>
+    </section>
+
+    <!-- العمود الثاني: كيفية كتابة التعليمات -->
+    <section class="content-col" style="background: #fbfcfd;">
+        <div class="col-title"><span>✍️</span> كيفية كتابة تعليمات الاختبار بوضوح</div>
+        <div class="feature-grid-small">
+            <div class="feature-item-small">1️⃣ <b>مقدمة توضيحية:</b> "هذا الاختبار يهدف إلى تقييم فهمك للمفاهيم الأساسية. الرجاء قراءة كل سؤال بعناية قبل الإجابة."</div>
+            <div class="feature-item-small">2️⃣ <b>مدة الاختبار:</b> "مدة الاختبار 30 دقيقة، ولن تتمكن من تعديل إجاباتك بعد الإرسال."</div>
+            <div class="feature-item-small">3️⃣ <b>أنواع الأسئلة:</b> "يتكون الاختبار من أسئلة اختيار من متعدد وأسئلة نصية قصيرة. اختر الإجابة الصحيحة أو اكتب إجابتك بوضوح."</div>
+        </div>
+    </section>
+
+    <!-- العمود الثالث: القواعد والإرشادات -->
+    <section class="content-col">
+        <div class="col-title"><span>📋</span> قواعد وإرشادات هامة</div>
+        <div class="feature-grid-small">
+            <div class="feature-item-small">🔹 لا يُسمح باستخدام المصادر الخارجية أثناء الاختبار</div>
+            <div class="feature-item-small">🔹 يجب الإجابة على جميع الأسئلة قبل الضغط على زر الإرسال</div>
+            <div class="feature-item-small">🔹 استخدم لغة واضحة ومباشرة وتجنب الجمل المعقدة</div>
+            <div class="feature-item-small">🔹 استخدم جمل قصيرة ومباشرة لتجنب سوء الفهم</div>
+            <div class="feature-item-small">🔹 أضف فواصل بين النقاط المهمة لسهولة القراءة</div>
+        </div>
+    </section>
+</div>
+        </div><!-- end text-columns-side -->
+        <div class="video-side">
+            <div class="video-side-title"><span>🎬</span>فيديو الوحدة الثالثة</div>
+            <div class="video-wrapper">
+                <iframe
+                    src="https://www.youtube.com/embed/YePB44YJisc?si=LUZBCyPeDu6JUYKY"
+                    title="فيديو الوحدة الثالثة"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <span class="video-badge">▶ شاهد الفيديو</span>
+        </div><!-- end video-side -->
+    </div><!-- end card-body-wrapper -->
+</body>
+</html>
+ 

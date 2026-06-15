@@ -119,6 +119,7 @@
             border-color: var(--white);
         }
 
+        /* ===== زر الوحدة الثانية ===== */
         .edu-item.locked {
             opacity: 0.4;
             cursor: not-allowed;
@@ -186,129 +187,65 @@
         .quiz-body { padding: 4px 25px; }
         .quiz-question-text {
             font-size: 18px; font-weight: 700;
-            margin-bottom: 16px; padding: 15px;
+            margin-bottom: 20px; padding: 15px;
             background: var(--cream); border-radius: 10px;
         }
-
-        /* ===== شبكة 2×2 للخيارات الأربعة ===== */
-        .quiz-options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
+        .quiz-options-grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
 
         .quiz-option {
-            padding: 10px 12px;
-            background: var(--white);
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.25s;
-            font-weight: 700;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
+            padding: 3px; background: var(--white);
+            border: 2px solid var(--border); border-radius: 12px;
+            cursor: pointer; transition: 0.3s; font-weight: 700;
+            display: flex; align-items: center; gap: 4px;
         }
-        .quiz-option:hover:not(.correct-flash):not(.wrong-flash) {
-            border-color: var(--gold);
-            background: #fdf8ec;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(184,134,11,0.15);
-        }
-
-        /* ===== دائرة الحرف ===== */
         .option-indicator {
-            width: 32px; height: 32px;
-            min-width: 32px;
-            border-radius: 50%;
-            border: 2px solid var(--border);
-            background: var(--cream);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 14px; font-weight: 900;
-            color: var(--navy);
-            transition: all 0.25s;
+            width:32px; height:32px; border-radius:50%;
+            border:1px solid var(--border);
+            display:flex; align-items:center; justify-content:center;
         }
-
-        /* ألوان الإجابات */
-        .correct-flash {
-            background-color: #d4edda !important;
-            border-color: var(--success) !important;
-            color: #155724 !important;
-        }
-        .wrong-flash {
-            background-color: #f8d7da !important;
-            border-color: var(--danger) !important;
-            color: #721c24 !important;
-        }
-        .correct-flash .option-indicator {
-            background: var(--success) !important;
-            color: #fff !important;
-            border-color: var(--success) !important;
-        }
-        .wrong-flash .option-indicator {
-            background: var(--danger) !important;
-            color: #fff !important;
-            border-color: var(--danger) !important;
-        }
+        .correct-flash { background-color:#d4edda !important; border-color:var(--success) !important; color:#155724 !important; }
+        .wrong-flash   { background-color:#f8d7da !important; border-color:var(--danger)  !important; color:#721c24 !important; }
+        .correct-flash .option-indicator { background:var(--success) !important; color:#fff !important; border-color:var(--success) !important; }
+        .wrong-flash   .option-indicator { background:var(--danger)  !important; color:#fff !important; border-color:var(--danger)  !important; }
 
         .quiz-footer {
-            display: flex; justify-content: space-between;
-            padding: 5px 25px; border-top: 1px solid var(--border);
+            display:flex; justify-content:space-between;
+            padding:20px 25px; border-top:1px solid var(--border);
         }
-        .quiz-btn {
-            padding: 5px 30px; border-radius: 50px;
-            cursor: pointer; border: none;
-            font-weight: 700; font-family: 'Cairo'; transition: 0.3s;
-        }
-        .btn-next { background: var(--navy); color: var(--gold-light); }
-        .btn-next:disabled { opacity: 0.5; cursor: not-allowed; }
+        .quiz-btn { padding:10px 30px; border-radius:50px; cursor:pointer; border:none; font-weight:700; font-family:'Cairo'; transition:0.3s; }
+        .btn-next { background:var(--navy); color:var(--gold-light); }
+        .btn-next:disabled { opacity:0.5; cursor:not-allowed; }
 
         /* ===== نتيجة ===== */
-        .quiz-result { display:none; padding:6px 40px; text-align:center; }
+        .quiz-result { display:none; padding:5px 40px; text-align:center; }
 
         .result-circle {
-            width: 110px; height: 110px; border-radius: 50%;
-            margin: 0 auto 16px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 25px; font-weight: 800;
-            border: 6px solid var(--navy); color: var(--navy);
+            width:120px; height:60px; border-radius:50%;
+            margin:0 auto 20px;
+            display:flex; align-items:center; justify-content:center;
+            font-size:32px; font-weight:800;
+            border:6px solid var(--navy); color:var(--navy);
             transition: border-color 0.5s, color 0.5s;
         }
 
+        /* بانر الرسالة */
         .result-banner {
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            margin: 5px auto 0; padding: 5px 18px; border-radius: 14px;
-            font-size: 15px; font-weight: 800; max-width: 480px;
+            display:flex; align-items:center; justify-content:center; gap:4px;
+            margin:1px auto 0; padding:5px 3px; border-radius:14px;
+            font-size:15px; font-weight:800; max-width:480px;
             animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
         }
         @keyframes popIn { from{transform:scale(0.7);opacity:0} to{transform:scale(1);opacity:1} }
 
         .banner-success { background:#d4edda; border:2px solid var(--success); color:#155724; }
-        .banner-retry   { background:#fff3cd; border:2px solid #ffc107; color:#856404; }
+        .banner-retry   { background:#fff3cd; border:2px solid #ffc107;        color:#856404; }
 
-        .btn-goto-unit {
-            display: inline-flex; align-items: center; gap: 8px;
-            margin-top: 18px; padding: 12px 30px;
-            background: linear-gradient(135deg, var(--navy), var(--navy-light));
-            color: var(--gold-light); border: none; border-radius: 50px;
-            font-size: 15px; font-family: 'Cairo', sans-serif; font-weight: 800;
-            cursor: pointer; text-decoration: none;
-            box-shadow: 0 6px 18px rgba(11,31,58,0.25);
-            transition: all 0.3s; animation: pulseGold 1.8s ease infinite;
-        }
-        .btn-goto-unit:hover { transform: translateY(-3px); box-shadow: 0 10px 26px rgba(11,31,58,0.35); }
 
-        .btn-retry {
-            display: inline-flex; align-items: center; gap: 8px;
-            margin-top: 14px; padding: 10px 26px;
-            background: #fff3cd; color: #856404;
-            border: 2px solid #ffc107; border-radius: 50px;
-            font-size: 14px; font-family: 'Cairo', sans-serif; font-weight: 800;
-            cursor: pointer; transition: all 0.3s;
+        .main-footer {
+            background:var(--navy); color:var(--gold-light);
+            text-align:center; padding:15px 0; font-size:13px; font-weight:700;
         }
-        .btn-retry:hover { background: #ffc107; color: #000; }
-@media (max-width: 640px) {
+        @media (max-width: 640px) {
     .hs { width: 38px; height: 38px; font-size: 12px; }
     .edu-item { min-width: 82px; }
     .modal-box { border-radius: 16px; }
@@ -330,7 +267,7 @@
 </head>
 <body>
 
-    <div class="top-header">
+   <div class="top-header">
     بيئة تدريب مصغر لتنمية مهارات تصميم الاختبارات الإلكترونية وكفاءة الذات المهنية لدى معلمي المرحلة الإعدادية
 
     <span style="
@@ -366,20 +303,21 @@
     </nav>
 
     <div class="education-nav">
-        <h1 class="section-title">الموضوع الأول</h1>
+        <h1 class="section-title">الموضوع الرابع</h1>
         <div class="edu-container">
             <a href="#" class="edu-item"><span class="edu-icon">📌</span><span class="edu-text">ملخص الوحدة</span></a>
             <a href="#" class="edu-item"><span class="edu-icon">📌</span><span class="edu-text">عنوان الوحدة</span></a>
-            <a href="t1unit5aims.html" class="edu-item"><span class="edu-icon">🎯</span><span class="edu-text">الهدف من الدراسة</span></a>
+            <a href="t4unit3aims.html" class="edu-item"><span class="edu-icon">🎯</span><span class="edu-text">الهدف من الدراسة</span></a>
             <a href="#" class="edu-item"><span class="edu-icon">📝</span><span class="edu-text">الاختبار القبلي</span></a>
-            <a href="t1unit5content.html" class="edu-item"><span class="edu-icon">📖</span><span class="edu-text">محتوى الوحدة</span></a>
-            <a href="t1unit5selftest.html" class="edu-item"><span class="edu-icon">🧠</span><span class="edu-text">التقويم الذاتي</span></a>
-            <a href="t1unit4activity.html" class="edu-item"><span class="edu-icon">🧩</span><span class="edu-text">النشاط التعليمي</span></a>
+            <a href="t4unit3content.html" class="edu-item"><span class="edu-icon">📖</span><span class="edu-text">محتوى الوحدة</span></a>
+            <a href="t4unit3selftest.html" class="edu-item"><span class="edu-icon">🧠</span><span class="edu-text">التقويم الذاتي</span></a>
+            <a href="t4unit3activity.html" class="edu-item"><span class="edu-icon">🧩</span><span class="edu-text">النشاط التعليمي</span></a>
             <a href="#" class="edu-item"><span class="edu-icon">🏆</span><span class="edu-text">الاختبار البعدي</span></a>
 
-            <a href="../topic2/" class="edu-item locked" id="unit2Btn">
+            <!-- زر الوحدة الثانية — مقفل في البداية -->
+            <a href="abstract t4unit4.html" class="edu-item locked" id="unit2Btn">
                 <span class="edu-icon" id="unit2Icon">🔒</span>
-                <span class="edu-text" id="unit2BtnText"> الموضوع الثاني</span>
+                <span class="edu-text" id="unit2BtnText">الوحدة الرابعة</span>
             </a>
         </div>
     </div>
@@ -393,7 +331,7 @@
             <div id="quizContent">
                 <div class="quiz-progress-wrap">
                     <div class="quiz-progress-info">
-                        <span id="qCounter">السؤال 1 من 2</span>
+                        <span id="qCounter">السؤال 1 من 3</span>
                         <span id="qPercent">0%</span>
                     </div>
                     <div class="quiz-progress-bar">
@@ -414,39 +352,25 @@
                 <div class="result-circle" id="resultCircle">
                     <span id="resultPercent">0%</span>
                 </div>
-                <h3 id="resultTitle" style="font-family:'Amiri',serif;font-size:24px;margin-top:8px;"></h3>
-                <p  id="resultSub"   style="margin-top:8px;color:#555;font-size:15px;"></p>
+                <h3 id="resultTitle" style="font-family:'Amiri',serif;font-size:26px;margin-top:8px;"></h3>
+                <p  id="resultSub"   style="margin-top:10px;color:#555;font-size:16px;"></p>
                 <div id="resultActions"></div>
             </div>
         </div>
     </main>
     <script>
-        /* حروف الخيارات أ ب ج د */
-        const LABELS = ['أ', 'ب', 'ج', 'د'];
-
-        /* ✏️ الأسئلة — correct = رقم الخيار الصحيح (0=أ، 1=ب، 2=ج، 3=د) */
-      const questions = [
-    {
-        text: "1. من المشكلات التالية تُعد من معوقات الاختبارات الإلكترونية...............  ",
-        options: [
-            "تصحيح تلقائي وسريع ",
-            " إمكانية حدوث أعطال تقنية ",
-            " توفير الوقت والجهد ",
-            " دعم الوسائط المتعددة "
-        ],
-        correct: 1
-    },
-    {
-        text: "2. من العوامل التي قد تؤثر سلبًا على أداء الطلاب في الاختبارات الإلكترونية.............. ",
-        options: [
-            "  استخدام التصحيح التلقائي ",
-            " ضعف الاتصال بالأنترنت  ",
-            " إمكانية استخدام الصور في الأسئلة  ",
-            "إمكانية الوصول إلى النتائج بسرعة "
-        ],
-        correct: 1
-    }
-];
+       const questions = [
+            {
+                text: "1. 	لا يمكن تعديل الأسئلة داخل القالب الجاهز بعد اختياره",
+                options: ["√ صحيح", "× خطأ"],
+                correct: 0
+            },
+            {
+                text: "2.	عند استخدام قالب جاهز، يجب مشاركة الاختبار مع جميع المستخدمين دون قيود ",
+                options: ["√ صحيح", "× خطأ"],
+                correct: 0
+            }
+        ];
 
         let current = 0;
         let answers = new Array(questions.length).fill(null);
@@ -458,28 +382,21 @@
 
             document.getElementById('qText').textContent    = q.text;
             document.getElementById('qCounter').textContent = `السؤال ${current + 1} من ${total}`;
-
             const pct = Math.round(((current + 1) / total) * 100);
             document.getElementById('qPercent').textContent     = pct + '%';
             document.getElementById('progressFill').style.width = pct + '%';
 
             const grid = document.getElementById('optionsGrid');
             grid.innerHTML = '';
-
             q.options.forEach((opt, i) => {
                 const div = document.createElement('div');
-                let cls   = '';
-
+                let cls = '';
                 if (answers[current] !== null) {
                     if (i === q.correct)             cls = ' correct-flash';
                     else if (answers[current] === i) cls = ' wrong-flash';
                 }
-
                 div.className = 'quiz-option' + cls;
-                div.innerHTML = `
-                    <span class="option-indicator">${LABELS[i]}</span>
-                    <span>${opt}</span>`;
-
+                div.innerHTML = `<span class="option-indicator">${i === 0 ? 'أ' : 'ب'}</span><span>${opt}</span>`;
                 div.onclick = () => {
                     if (answers[current] === null) {
                         answers[current] = i;
@@ -506,23 +423,25 @@
             document.getElementById('quizContent').style.display = 'none';
             document.getElementById('quizResult').style.display  = 'block';
 
-            const correctCount = answers.filter((a, i) => a === questions[i].correct).length;
-            const scorePct     = Math.round((correctCount / questions.length) * 100);
-            const passed       = scorePct >= 80;
+            const correct  = answers.filter((a, i) => a === questions[i].correct).length;
+            const scorePct = Math.round((correct / questions.length) * 100);
+            const passed   = scorePct >= 80;
 
             document.getElementById('resultPercent').textContent = scorePct + '%';
 
+            /* لون دائرة النتيجة */
             const circle = document.getElementById('resultCircle');
             circle.style.borderColor = passed ? 'var(--success)' : 'var(--danger)';
             circle.style.color       = passed ? 'var(--success)' : 'var(--danger)';
 
+            /* نص النتيجة */
             let title, sub;
             if (scorePct >= 80) {
                 title = "أداء متميز! 🌟";
                 sub   = "لقد أحسنت صنعاً، أنت تمتلك خلفية قوية عن الاختبارات الإلكترونية.";
             } else if (scorePct >= 50) {
                 title = "أداء جيد 👍";
-                sub   = "بداية موفقة، لكن تحتاج إلى مراجعة المحتوى جيداً للانتقال إلى الوحدة الخامسة.";
+                sub   = "بداية موفقة، لكن تحتاج إلى مراجعة المحتوى جيداً للانتقال إلى الوحدة الرابعة.";
             } else {
                 title = "تحتاج إلى مزيد من الدراسة 📚";
                 sub   = "راجع محتوى الوحدة بعناية، ثم أعد الاختبار مجدداً.";
@@ -533,18 +452,21 @@
             const actionsEl = document.getElementById('resultActions');
 
             if (passed) {
+                /* ✅ نجاح — فتح الوحدة الثانية */
                 unlockUnit2();
                 actionsEl.innerHTML = `
                     <div class="result-banner banner-success">
-                        🎉 ممتاز! يمكنك الآن الانتقال إلى دراسة الوحدة الخامسة
+                        🎉 ممتاز! يمكنك الآن الانتقال إلى دراسة الوحدة الرابعة
                     </div>
                     <br>
-                    
+                    <a href="unit4.html" class="btn-goto-unit4">
+                      
                     </a>`;
             } else {
+                /* ❌ رسوب — الزر يبقى مقفلاً */
                 actionsEl.innerHTML = `
                     <div class="result-banner banner-retry">
-                        ⚠️ يجب الحصول على 80% على الأقل للانتقال إلى الوحدة الخامسة — راجع المحتوى مرة أخرى
+                        ⚠️ يجب الحصول على 80% على الأقل للانتقال إلى الوحدة الرابعة — راجع المحتوى مرة أخرى
                     </div>
                     <br>
                     <button class="btn-retry" onclick="retryQuiz()">
@@ -553,14 +475,16 @@
             }
         }
 
+        /* ---- فتح زر الوحدة الثانية في الناف ---- */
         function unlockUnit2() {
             const btn = document.getElementById('unit2Btn');
             btn.classList.remove('locked');
             btn.classList.add('unlocked');
             document.getElementById('unit2Icon').textContent    = '🔓';
-            document.getElementById('unit2BtnText').textContent = 'الوحدة الخامسة ✨';
+            document.getElementById('unit2BtnText').textContent = 'الوحدة الرابعة ✨';
         }
 
+        /* ---- إعادة الاختبار ---- */
         function retryQuiz() {
             current = 0;
             answers = new Array(questions.length).fill(null);

@@ -29,7 +29,6 @@
             min-height: 100vh;
         }
 
-        /* 1. العنوان العلوي */
         .top-header {
             background: var(--navy);
             color: var(--gold-light);
@@ -40,7 +39,6 @@
             border-bottom: 3px solid var(--gold);
         }
 
-        /* 2. ناف الأيقونات */
         .main-nav {
             background: var(--white);
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
@@ -78,7 +76,6 @@
             transform: translateY(-2px);
         }
 
-        /* 3. عنوان الرسالة */
         .hero-section {
             background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
             padding: 11px 20px;
@@ -95,16 +92,15 @@
             font-weight: 700;
         }
 
-        /* 4. قسم الوحدات - التوسط الكامل */
         .subjects-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 4px 20px;
-            flex: 1; /* يشغل المساحة المتاحة */
+            flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* التوسط العمودي */
-            align-items: center;    /* التوسط الأفقي */
+            justify-content: center;
+            align-items: center;
             width: 100%;
         }
 
@@ -141,7 +137,7 @@
         }
 
         .subjects-grid {
-            display: flex; /* استخدمنا flex بدلاً من grid لسهولة التوسط في عدد أقل من الكروت */
+            display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 17px;
@@ -156,8 +152,12 @@
             border: 1px solid var(--border);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
-            width: 150px; /* عرض ثابت للكروت لضمان التناسق */
+            width: 150px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         .subject-card:hover {
@@ -201,23 +201,19 @@
             line-height: 1.4;
         }
 
-        /* 5. الفوتر */
+        .lock-icon {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 18px;
+        }
+
         .main-footer {
             background: var(--navy);
             color: var(--white);
             text-align: center;
             padding: 5px 0;
             border-top: 4px solid var(--gold);
-        }
-
-        .footer-content {
-            font-family: 'Amiri', serif;
-            font-size: 18px;
-        }
-
-        .footer-name {
-            color: var(--gold-light);
-            font-weight: 700;
         }
 
         @media (max-width: 768px) {
@@ -229,41 +225,16 @@
 <body>
 
     <div class="top-header">
-    بيئة تدريب مصغر لتنمية مهارات تصميم الاختبارات الإلكترونية وكفاءة الذات المهنية لدى معلمي المرحلة الإعدادية
-
-    <span style="
-        position: absolute;
-        left: 20px;
-        background: var(--gold);
-        color: var(--navy);
-        font-size: 13px;
-        font-weight: 900;
-        padding: 4px 14px;
-        border-radius: 20px;
-        letter-spacing: 0.3px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-        white-space: nowrap;
-    ">✦ بيئة تدريب مصغر — ملخص قبلي</span>
-</div>
+        بيئة تدريب مصغر لتنمية مهارات تصميم الاختبارات الإلكترونية وكفاءة الذات المهنية لدى معلمي المرحلة الإعدادية
+        <span style="position:absolute;left:20px;background:var(--gold);color:var(--navy);font-size:13px;font-weight:900;padding:4px 14px;border-radius:20px;letter-spacing:0.3px;box-shadow:0 2px 8px rgba(0,0,0,0.25);white-space:nowrap;">✦ بيئة تدريب مصغر — ملخص قبلي</span>
+    </div>
 
     <nav class="main-nav">
         <div class="nav-container">
-            <a href="#" class="nav-item">
-                <span class="icon-symbol">🏠</span>
-                <span>الصفحة الرئيسية</span>
-            </a>
-            <a href="#" class="nav-item">
-                <span class="icon-symbol">📚</span>
-                <span>المحتوى التعليمي</span>
-            </a>
-            <a href="#" class="nav-item">
-                <span class="icon-symbol">📜</span>
-                <span>التعليمات</span>
-            </a>
-            <a href="#" class="nav-item">
-                <span class="icon-symbol">✉️</span>
-                <span>التواصل</span>
-            </a>
+            <a href="index.html" class="nav-item"><span>🏠</span><span>الصفحة الرئيسية</span></a>
+            <a href="mods.html" class="nav-item"><span>📚</span><span>المحتوى التعليمي</span></a>
+            <a href="instruction.html" class="nav-item"><span>📜</span><span>التعليمات</span></a>
+            <a href="contact.html" class="nav-item"><span>✉️</span><span>التواصل</span></a>
         </div>
     </nav>
 
@@ -279,42 +250,76 @@
         </div>
 
         <div class="subjects-grid">
-            <div class="subject-card">
+
+            <a href="topic5/t5unit1.html" class="subject-card" onclick="return checkPassword(event, 'topic5/abstract t5unit1.html', '1111')">
+                <div class="lock-icon">🔒</div>
                 <div class="img-circle">📑</div>
                 <span class="subject-order">الوحدة الأولى</span>
-                <p class="subject-name">ضبط اتجاه نموذج الاختبار عربي – إنجليزي </p>
-            </div>
-            <div class="subject-card">
+                <p class="subject-name">ضبط اتجاه نموذج الاختبار عربي – إنجليزي</p>
+            </a>
+
+            <a href="topic5/t5unit2.html" class="subject-card" onclick="return checkPassword(event, 'topic5/abstract t5unit2.html', '2222')">
+                <div class="lock-icon">🔒</div>
                 <div class="img-circle">⚙️</div>
                 <span class="subject-order">الوحدة الثانية</span>
-                <p class="subject-name">كتابة بيانات الاختبار الأساسية بدقة   </p>
-            </div>
-            <div class="subject-card">
+                <p class="subject-name">كتابة بيانات الاختبار الأساسية بدقة</p>
+            </a>
+
+            <a href="topic5/t5unit3.html" class="subject-card" onclick="return checkPassword(event, 'topic5/abstract t5unit3.html', '3333')">
+                <div class="lock-icon">🔒</div>
                 <div class="img-circle">🖼️</div>
                 <span class="subject-order">الوحدة الثالثة</span>
-                <p class="subject-name">كتابة تعليمات الاختبار بطريقة واضحة  </p>
-            </div>
-            <div class="subject-card">
+                <p class="subject-name">كتابة تعليمات الاختبار بطريقة واضحة</p>
+            </a>
+
+            <a href="topic5/t5unit4.html" class="subject-card" onclick="return checkPassword(event, 'topic5/abstract t5unit4.html', '4444')">
+                <div class="lock-icon">🔒</div>
                 <div class="img-circle">📊</div>
                 <span class="subject-order">الوحدة الرابعة</span>
-                <p class="subject-name">تحديد الإجابات الصحيحة لأسئلة الاختبار </p>
-            </div>
-            <div class="subject-card">
+                <p class="subject-name">تحديد الإجابات الصحيحة لأسئلة الاختبار</p>
+            </a>
+
+            <a href="topic5/t5unit5.html" class="subject-card" onclick="return checkPassword(event, 'topic5/abstract t5unit5.html', '5555')">
+                <div class="lock-icon">🔒</div>
                 <div class="img-circle">⚡</div>
                 <span class="subject-order">الوحدة الخامسة</span>
-                <p class="subject-name">إضافة ميزة العشوائية الى أسئلة الاختبار   </p>
-            </div>
-            <div class="subject-card">
+                <p class="subject-name">إضافة ميزة العشوائية الى أسئلة الاختبار</p>
+            </a>
+
+            <a href="topic5/t5unit6.html" class="subject-card" onclick="return checkPassword(event, 'topic5/abstract t5unit6.html', '6666')">
+                <div class="lock-icon">🔒</div>
                 <div class="img-circle">⚡</div>
                 <span class="subject-order">الوحدة السادسة</span>
-                <p class="subject-name">تحديد زمن بدء وانتهاء الاختبار  </p>
-            </div>
-            <div class="subject-card">
+                <p class="subject-name">تحديد زمن بدء وانتهاء الاختبار</p>
+            </a>
+
+            <a href="topic5/t5unit7.html" class="subject-card" onclick="return checkPassword(event, 'topic5/abstract t5unit7.html', '7777')">
+                <div class="lock-icon">🔒</div>
                 <div class="img-circle">⚡</div>
                 <span class="subject-order">الوحدة السابعة</span>
-                <p class="subject-name">ضبط طريقة اظهار النتائج للطلاب   </p>
-            </div>
+                <p class="subject-name">ضبط طريقة اظهار النتائج للطلاب</p>
+            </a>
+
         </div>
     </section>
+
+    <script>
+        function checkPassword(event, link, correctPassword) {
+            event.preventDefault();
+            let saved = localStorage.getItem(link);
+            if (saved === "open") {
+                window.location.href = link;
+                return false;
+            }
+            let password = prompt("🔐 أدخل كلمة المرور لفتح الوحدة:");
+            if (password === correctPassword) {
+                localStorage.setItem(link, "open");
+                window.location.href = link;
+            } else if (password !== null) {
+                alert("❌ كلمة المرور غير صحيحة");
+            }
+            return false;
+        }
+    </script>
 </body>
 </html>

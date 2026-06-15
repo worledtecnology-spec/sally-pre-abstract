@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بيئة تدريب مصغر - الوحدة الأولى</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --navy: #0b1f3a;
+            --navy-light: #1a3e72;
+            --gold: #b8860b;
+            --gold-light: #d4a017;
+            --cream: #faf7f0;
+            --white: #ffffff;
+            --accent-teal: #145a67; /* لون مميز للأيقونات الجديدة */
+            --border: rgba(184, 134, 11, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--cream);
+            color: var(--navy);
+            line-height: 1.6;
+            direction: rtl;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+ /* 1. العنوان العلوي */
+        .top-header {
+            background: var(--navy);
+            color: var(--gold-light);
+            text-align: center;
+            padding: 12px 0;
+            font-size: 15px;
+            font-weight: 600;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        /* 2. ناف الأيقونات (الرموز بجوار النص) */
+        .main-nav {
+            background: var(--white);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--navy);
+            display: flex;
+            align-items: center; /* محاذاة عمودية */
+            gap: 12px; /* مسافة بين الرمز والنص */
+            padding: 10px 20px;
+            background: var(--cream);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item span {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .icon-symbol {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: var(--navy);
+            color: var(--gold-light);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(11, 31, 58, 0.15);
+        }
+
+        .nav-item:hover .icon-symbol {
+            transform: scale(1.2);
+        }
+        /* 1. الناف العلوي الأساسي */
+        .main-nav {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 8px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        /* 2. قسم الأيقونات التعليمية (بديل عنوان البيئة) */
+        .education-nav {
+            background: var(--accent-teal);
+            padding: 15px 0;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .edu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .edu-icon { 
+    font-size: 13px; /* تصغير الأيقونة قليلاً لتناسب السطر */
+}
+
+.edu-text { 
+    font-size: 13px; /* تكبير النص قليلاً للوضوح */
+    font-weight: 700; 
+    text-align: right; 
+    white-space: nowrap; /* منع النص من الانقسام لسطرين */
+}
+        .edu-item {
+            text-decoration: none;
+            color: var(--white);
+            display: flex;
+            /* تغيير الاتجاه ليكون أفقي بدلاً من عمودي */
+            flex-direction: row; 
+            align-items: center;
+            /* إضافة مسافة بين الأيقونة والنص */
+            gap: 1px; 
+            padding: 1px 15px;
+            /* إزالة الحد الأدنى للعرض أو تعديله ليتناسب مع التصميم الأفقي */
+            min-width: auto; 
+            background: rgba(255,255,255,0.1);
+            border-radius: 13px;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .edu-item:hover {
+            background: var(--gold);
+            transform: translateY(-3px);
+            border-color: var(--white);
+        }
+
+        .edu-icon { font-size: 24px; }
+        .edu-text { font-size: 11px; font-weight: 700; text-align: center; }
+        /* 3. الكارت المتميز للوحدة */
+        .unit-hero-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .unit-card {
+            background: var(--white);
+            width: 100%;
+            max-width: 800px;
+            padding: 60px 40px;
+            border-radius: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 50px rgba(11, 31, 58, 0.1);
+        }
+
+        /* تأثير الزخرفة في الخلفية */
+        .unit-card::before {
+            content: "01";
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            font-size: 150px;
+            font-weight: 900;
+            color: rgba(184, 134, 11, 0.05);
+            font-family: sans-serif;
+        }
+
+        .unit-badge {
+            background: var(--gold);
+            color: var(--white);
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .unit-title {
+            font-family: 'Amiri', serif;
+            font-size: clamp(28px, 5vw, 42px);
+            color: var(--navy);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .unit-divider {
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            margin: 20px auto;
+        }
+
+        .unit-subtitle {
+            font-size: 18px;
+            color: var(--navy-light);
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        /* 4. الفوتر */
+        .main-footer {
+            background: var(--navy);
+            color: var(--white);
+            text-align: center;
+            padding: 4px 0;
+            border-top: 4px solid var(--gold);
+        }
+
+        .footer-name { color: var(--gold-light); font-weight: 700; }
+
+        @media (max-width: 768px) {
+            .edu-item { min-width: 80px; padding: 8px; }
+            .edu-text { font-size: 10px; }
+            .unit-card { padding: 40px 20px; }
+        }
+ .section-title {
+    position: relative;
+    text-align: center;
+    font-family: 'Amiri', serif;
+    font-size: 22px;
+    font-weight: 900px;
+    color: var(--navy);
+    margin: 1px auto 9px;
+    padding-bottom: 1px;
+    width: fit-content;
+    color: #faf7f0;
+}
+
+/* خط تحت العنوان */
+.section-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    transform: translateX(50%);
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    border-radius: 2px;
+}
+
+/* تأثير hover */
+.section-title:hover {
+    color: var(--gold);
+    transition: 0.3s;
+}
+@media (max-width: 640px) {
+    .hs { width: 38px; height: 38px; font-size: 12px; }
+    .edu-item { min-width: 82px; }
+    .modal-box { border-radius: 16px; }
+    .modal-header, .modal-body, .modal-footer { padding-left: 16px; padding-right: 16px; }
+}
+
+@media (max-height: 768px) {
+    .hs { width: 38px; height: 38px; font-size: 12px; }
+    .modal-box { border-radius: 14px; }
+    .modal-header, .modal-body, .modal-footer { padding-top: 12px; padding-bottom: 12px; }
+}
+
+@media (max-height: 700px) {
+    .hs { width: 34px; height: 34px; font-size: 11px; }
+    .modal-box { border-radius: 12px; }
+    .modal-header, .modal-body, .modal-footer { padding-top: 8px; padding-bottom: 8px; }
+}
+    </style>
+</head>
+<body>
+<div class="top-header">
+    بيئة تدريب مصغر لتنمية مهارات تصميم الاختبارات الإلكترونية وكفاءة الذات المهنية لدى معلمي المرحلة الإعدادية
+
+    <span style="
+        position: absolute;
+        left: 20px;
+        background: var(--gold);
+        color: var(--navy);
+        font-size: 13px;
+        font-weight: 900;
+        padding: 4px 14px;
+        border-radius: 20px;
+        letter-spacing: 0.3px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        white-space: nowrap;
+    ">✦ بيئة تدريب مصغر — ملخص قبلي</span>
+</div>
+
+     <nav class="main-nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-item" target="_self">
+                <span class="icon-symbol">🏠</span>
+                <span>الصفحة الرئيسية</span>
+            </a>
+            <a href="../mods.html" class="nav-item" target="_self">
+                <span class="icon-symbol">📚</span>
+                <span>المحتوى التعليمي</span>
+            </a>
+            <a href="../instruction.html" class="nav-item" target="_self">
+                <span class="icon-symbol">📜</span>
+                <span>التعليمات</span>
+            </a>
+            <a href="../contact.html" class="nav-item" target="_self>
+                <span class="icon-symbol">✉️</span>
+                <span>التواصل</span>
+            </a>
+        </div>
+    </nav>
+    <div class="education-nav">
+        <h1 class="section-title">الموضوع السابع</h1>
+        <div class="edu-container">
+             <a href="#" class="edu-item" target="_self">
+                <span class="edu-icon"></span>
+                <span class="edu-text">ملخص الوحدة</span>
+            </a>
+            <a href="#" class="edu-item" target="_self"> 
+                <span class="edu-icon">📌</span>
+                <span class="edu-text">عنوان الوحدة</span>
+            </a>
+            <a href="t7unit2aims.html" class="edu-item" target="_self">
+                <span class="edu-icon">🎯</span>
+                <span class="edu-text">الهدف من الدراسة</span>
+            </a>
+            <a href="#" class="edu-item" target="_self">
+                <span class="edu-icon">📝</span>
+                <span class="edu-text">الاختبار القبلي</span>
+            </a>
+            <a href="#" class="edu-item" target="_self">
+                <span class="edu-icon">📖</span>
+                <span class="edu-text">محتوى الوحدة</span>
+            </a>
+            <a href="#" class="edu-item" target="_self">
+                <span class="edu-icon">🧠</span>
+                <span class="edu-text">التقويم الذاتي</span>
+            </a>
+            <a href="#" class="edu-item" target="_self">
+                <span class="edu-icon">🧩</span>
+                <span class="edu-text">النشاط التعليمي</span>
+            </a>
+            <a href="#" class="edu-item" target="_self">
+                <span class="edu-icon">🏆</span>
+                <span class="edu-text">الاختبار البعدي</span>
+            </a>
+        </div>
+    </div>
+
+    <main class="unit-hero-container">
+        <div class="unit-card">
+            <span class="unit-badge">الوحدة التعليمية الثانية</span>
+            <h1 class="unit-title">مشاركة الاختبار الإلكتروني    </h1>
+            <div class="unit-divider"></div>
+        </div>
+    </main>
+</body>
+</html>
