@@ -317,7 +317,7 @@
             <!-- زر الوحدة الثانية — مقفل في البداية -->
             <a href="abstract t1unit2.html" class="edu-item locked" id="unit2Btn">
                 <span class="edu-icon" id="unit2Icon">🔒</span>
-                <span class="edu-text" id="unit2BtnText">الوحدة الرابعة</span>
+                <span class="edu-text" id="unit2BtnText">الوحدة الثانية</span>
             </a>
         </div>
     </div>
@@ -447,7 +447,7 @@
                 sub   = "لقد أحسنت صنعاً، أنت تمتلك خلفية قوية عن الاختبارات الإلكترونية.";
             } else if (scorePct >= 50) {
                 title = "أداء جيد 👍";
-                sub   = "بداية موفقة، لكن تحتاج إلى مراجعة المحتوى جيداً للانتقال إلى الوحدة الرابعة.";
+                sub   = "بداية موفقة، لكن تحتاج إلى مراجعة المحتوى جيداً للانتقال إلى الوحدة الثانية.";
             } else {
                 title = "تحتاج إلى مزيد من الدراسة 📚";
                 sub   = "راجع محتوى الوحدة بعناية، ثم أعد الاختبار مجدداً.";
@@ -462,7 +462,7 @@
                 unlockUnit2();
                 actionsEl.innerHTML = `
                     <div class="result-banner banner-success">
-                        🎉 ممتاز! يمكنك الآن الانتقال إلى دراسة الوحدة الرابعة
+                        🎉 ممتاز! يمكنك الآن الانتقال إلى دراسة الوحدة الثانية
                     </div>
                     <br>
                     <a href="unit2.html" class="btn-goto-unit2">
@@ -487,7 +487,7 @@
             btn.classList.remove('locked');
             btn.classList.add('unlocked');
             document.getElementById('unit2Icon').textContent    = '🔓';
-            document.getElementById('unit2BtnText').textContent = ' الوحدة الرابعة ✨';
+            document.getElementById('unit2BtnText').textContent = ' الوحدة الثانية ✨';
         }
 
         /* ---- إعادة الاختبار ---- */
