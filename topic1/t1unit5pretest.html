@@ -527,7 +527,7 @@
                 <span class="icon-symbol">📜</span>
                 <span>التعليمات</span>
             </a>
-            <a href="../contact.html" class="nav-item" target="_self>
+            <a href="../contact.html" class="nav-item" target="_self">
                 <span class="icon-symbol">✉️</span>
                 <span>التواصل</span>
             </a>
@@ -688,8 +688,15 @@ function navigate(dir) {
     renderQuestion();
 }
 
+function unlockContent() {
+    const btn = document.getElementById('contentBtn');
+    if (btn) {
+        btn.classList.remove('content-locked');
+        btn.classList.add('content-unlocked');
+    }
+}
+
 function showResult() {
-    unlockContent();
     unlockContent();
     document.getElementById('quizContent').style.display = 'none';
     document.getElementById('quizResult').style.display = 'block';
