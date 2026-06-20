@@ -530,20 +530,20 @@
 
             if (passed) {
                 /* ✅ نجاح — فتح الوحدة الثالثة */
-                unlockUnit3();
+                unlockUnit2();
                 actionsEl.innerHTML = `
                     <div class="result-banner banner-success">
                         🎉 ممتاز! يمكنك الآن الانتقال إلى دراسة الوحدة الثالثة
                     </div>
                     <br>
                     <a href="t3unit3.html" class="btn-goto-unit3">
-                      
+                      الانتقال إلى الوحدة الثالثة ✨
                     </a>`;
             } else {
                 /* ❌ رسوب — الزر يبقى مقفلاً */
                 actionsEl.innerHTML = `
                     <div class="result-banner banner-retry">
-                        ⚠️ يجب الحصول على 80% على الأقل للانتقال إلى الوحدة الثانية — راجع المحتوى مرة أخرى
+                        ⚠️ يجب الحصول على 80% على الأقل للانتقال إلى الوحدة الثالثة — راجع المحتوى مرة أخرى
                     </div>
                     <br>
                     <button class="btn-retry" onclick="retryQuiz()">
@@ -556,8 +556,8 @@
             const btn = document.getElementById('unit2Btn');
             btn.classList.remove('locked');
             btn.classList.add('unlocked');
-            document.getElementById('unit3Icon').textContent    = '🔓';
-            document.getElementById('unit3BtnText').textContent = 'الوحدة الثالثة ✨';
+            document.getElementById('unit2Icon').textContent    = '🔓';
+            document.getElementById('unit2BtnText').textContent = 'الوحدة الثالثة ✨';
         }
 
         function retryQuiz() {
