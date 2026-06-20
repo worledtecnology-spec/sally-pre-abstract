@@ -34,7 +34,7 @@
             background: var(--navy);
             color: var(--gold-light);
             text-align: center;
-            padding: 12px 0;
+            padding: 8px 0;
             font-size: 15px;
             font-weight: 600;
             border-bottom: 3px solid var(--gold);
@@ -88,7 +88,7 @@
 
         .education-nav {
             background: var(--accent-teal);
-            padding: 15px 0;
+            padding: 8px 0;
             border-bottom: 3px solid var(--gold);
         }
 
@@ -151,8 +151,8 @@
 
         /* الحاوية الرئيسية */
         .wide-container {
-            padding: 20px;
-            max-width: 98%;
+            padding: 10px 12px;
+            max-width: 100%;
             margin: 0 auto;
             flex: 1;
         }
@@ -168,7 +168,7 @@
 
         .card-header-horizontal {
             background: var(--navy);
-            padding: 14px;
+            padding: 10px;
             text-align: center;
             border-bottom: 3px solid var(--gold);
             border-radius: 15px 15px 0 0;
@@ -177,7 +177,7 @@
         .card-header-horizontal h2 {
             font-family: 'Amiri', serif;
             color: var(--gold-light);
-            font-size: 22px;
+            font-size: 20px;
         }
 
         .card-body-wrapper {
@@ -192,18 +192,17 @@
         }
 
         .columns-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            padding: 16px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 12px;
             flex: 1;
         }
 
         .content-col {
-            flex: 1;
-            min-width: 260px;
+            min-width: 0;
             background: rgba(255,255,255,0.5);
-            padding: 15px;
+            padding: 12px;
             border-radius: 10px;
             border: 1px solid #f0f0f0;
         }
@@ -214,9 +213,9 @@
             gap: 10px;
             font-weight: 700;
             color: var(--accent-teal);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             border-bottom: 2px solid var(--gold-light);
-            padding-bottom: 5px;
+            padding-bottom: 4px;
             font-size: 15px;
         }
 
@@ -231,13 +230,13 @@
         .feature-grid-small {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 7px;
-            margin-top: 8px;
+            gap: 5px;
+            margin-top: 6px;
         }
 
         .feature-item-small {
             background: var(--cream);
-            padding: 6px 12px;
+            padding: 5px 12px;
             border-radius: 6px;
             font-size: 12.5px;
             font-weight: 600;
@@ -254,7 +253,7 @@
             font-size: 12.5px;
             font-weight: 700;
             color: var(--navy);
-            margin: 8px 0 4px;
+            margin: 6px 0 3px;
             padding: 3px 8px;
             background: rgba(11,31,58,0.07);
             border-radius: 5px;
@@ -263,23 +262,23 @@
         .def-highlight {
             background: var(--navy);
             color: #fff;
-            padding: 10px 14px;
+            padding: 8px 14px;
             border-radius: 10px;
-            margin-top: 10px;
+            margin-top: 8px;
             font-size: 12.5px;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         .def-highlight b { color: var(--gold-light); }
 
         /* فيديو */
         .video-side {
-            flex: 0 0 280px;
+            flex: 0 0 240px;
             background: var(--navy);
-            padding: 15px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
             border-right: 3px solid var(--gold);
         }
 
@@ -339,14 +338,17 @@
             font-weight: 700;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1100px) {
             .card-body-wrapper { flex-direction: column; }
             .video-side { flex: none; width: 100%; border-right: none; border-top: 3px solid var(--gold); }
         }
 
-        @media (max-width: 768px) {
-            .columns-wrapper { flex-direction: column; }
-            .content-col { min-width: 100%; }
+        @media (max-width: 900px) {
+            .columns-wrapper { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .columns-wrapper { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -398,21 +400,19 @@
             <div class="text-columns-side">
                 <div class="columns-wrapper">
 
-                    <!-- العمود الأول: الأهمية -->
+                    <!-- العمود الأول: الأهمية والقواعد العامة -->
                     <section class="content-col">
                         <div class="col-title"><span>✅</span> أولاً: أهمية الصياغة الصحيحة</div>
                         <div class="feature-grid-small">
-                            <div class="feature-item-small">📊 قياس المستوى الحقيقي للطلاب بدقة</div>
-                            <div class="feature-item-small">⚖️ تحقيق العدالة بين جميع المتعلمين دون تحيز</div>
-                            <div class="feature-item-small">🔒 تعزيز صدق وثبات الاختبار كأداة تقييم موثوقة</div>
+                            <div class="feature-item-small">📊 قياس مستوى الطلاب بدقة وعدالة دون تحيز</div>
+                            <div class="feature-item-small">🔒 تعزيز صدق وثبات الاختبار كأداة موثوقة</div>
                         </div>
 
                         <div class="col-title" style="margin-top:14px;"><span>📏</span> ثانيًا: قواعد عامة للبناء</div>
                         <div class="feature-grid-small">
-                            <div class="feature-item-small">💬 السؤال واضح وسهل الفهم بلا تعقيد لغوي</div>
-                            <div class="feature-item-small">🎯 مرتبط بالمحتوى ويقيس الهدف المطلوب</div>
+                            <div class="feature-item-small">💬 وضوح السؤال وارتباطه بالهدف المطلوب قياسه</div>
                             <div class="feature-item-small">🚫 تجنب التلميحات التي تُسهّل التخمين</div>
-                            <div class="feature-item-small">📐 الإجابات المحتملة متقاربة في الصياغة والطول</div>
+                            <div class="feature-item-small">📐 تقارب الإجابات المحتملة في الصياغة والطول</div>
                         </div>
                     </section>
 
@@ -422,27 +422,22 @@
 
                         <div class="sub-section-title">🔵 الاختيار من متعدد</div>
                         <div class="feature-grid-small">
-                            <div class="feature-item-small">جذع واضح وخيارات متساوية في الطول والتركيب</div>
-                            <div class="feature-item-small">تجنب "دائمًا / أبدًا" — دليل على الخطأ</div>
-                            <div class="feature-item-small">خيار صحيح واحد فقط + بقية مقنعة لكن خاطئة</div>
+                            <div class="feature-item-small">جذع وخيارات متساوية، وتجنب "دائمًا/أبدًا"</div>
                         </div>
 
                         <div class="sub-section-title">🟢 الصواب والخطأ</div>
                         <div class="feature-grid-small">
-                            <div class="feature-item-small">عبارات واضحة ومحددة وليست غامضة</div>
-                            <div class="feature-item-small">تجنب النفي المزدوج — يُربك الطلاب</div>
+                            <div class="feature-item-small">عبارات محددة، وتجنب النفي المزدوج</div>
                         </div>
 
                         <div class="sub-section-title">🟡 المزاوجة</div>
                         <div class="feature-grid-small">
-                            <div class="feature-item-small">قوائم متوازنة — عدد عناصر متقارب في كل عمود</div>
-                            <div class="feature-item-small">تجنب جعل الإجابات واضحة جداً أو مكررة</div>
+                            <div class="feature-item-small">قوائم متوازنة دون تكرار يسهّل الإجابة</div>
                         </div>
 
                         <div class="sub-section-title">🟠 إكمال الفراغات</div>
                         <div class="feature-grid-small">
-                            <div class="feature-item-small">الفراغ في موقع لا يؤثر على فهم الجملة</div>
-                            <div class="feature-item-small">إجابة واحدة صحيحة وواضحة فقط</div>
+                            <div class="feature-item-small">فراغ لا يؤثر على المعنى، وإجابة واحدة صحيحة</div>
                         </div>
                     </section>
 
@@ -450,22 +445,18 @@
                     <section class="content-col">
                         <div class="col-title"><span>📖</span> رابعًا: قواعد الأسئلة المقالية</div>
                         <div class="feature-grid-small">
-                            <div class="feature-item-small">📌 وضّح المطلوب: اشرح / قارن / علل / حلل</div>
-                            <div class="feature-item-small">🔢 حدد عدد النقاط المطلوبة في الإجابة</div>
-                            <div class="feature-item-small">🧠 السؤال يقيس الفهم وليس الحفظ فقط</div>
-                            <div class="feature-item-small">📋 نموذج إجابة محدد لتوحيد التصحيح</div>
+                            <div class="feature-item-small">📌 تحديد المطلوب (اشرح/قارن/علل) وعدد النقاط</div>
+                            <div class="feature-item-small">📋 نموذج إجابة محدد يقيس الفهم لا الحفظ</div>
                         </div>
 
                         <div class="col-title" style="margin-top:14px;"><span>⚠️</span> خامسًا: أخطاء يجب تجنبها</div>
                         <div class="feature-grid-small">
-                            <div class="feature-item-small danger">❌ مصطلحات معقدة غير مناسبة لمستوى الطلاب</div>
-                            <div class="feature-item-small danger">❌ أسئلة بعيدة عن الأهداف التعليمية</div>
-                            <div class="feature-item-small danger">❌ خيارات غير متوازنة في الطول أو الأسلوب</div>
-                            <div class="feature-item-small danger">❌ نمطية الإجابات الصحيحة تُسهّل التخمين</div>
+                            <div class="feature-item-small danger">❌ مصطلحات معقدة وأسئلة بعيدة عن الأهداف</div>
+                            <div class="feature-item-small danger">❌ خيارات غير متوازنة ونمطية تُسهّل التخمين</div>
                         </div>
 
                         <div class="def-highlight">
-                            <b>تذكّر:</b> جودة السؤال تعكس جودة التقييم — الأسئلة المُحكمة الصياغة هي أساس الاختبار الصادق والموثوق.
+                            <b>تذكّر:</b> جودة السؤال تعكس جودة التقييم وأساس الاختبار الصادق.
                         </div>
                     </section>
 

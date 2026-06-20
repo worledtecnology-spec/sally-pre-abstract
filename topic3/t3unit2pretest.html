@@ -474,6 +474,17 @@
     .modal-box { border-radius: 12px; }
     .modal-header, .modal-body, .modal-footer { padding-top: 8px; padding-bottom: 8px; }
 }
+    
+        /* قفل أيقونة محتوى الوحدة حتى إتمام الاختبار القبلي بالكامل */
+        .edu-item.locked {
+            opacity: 0.45;
+            cursor: not-allowed;
+            pointer-events: none;
+            filter: grayscale(60%);
+        }
+        .edu-item.locked .edu-text::after {
+            content: " 🔒";
+        }
     </style>
 </head>
 <body>
@@ -535,7 +546,7 @@
                 <span class="edu-icon">📝</span>
                 <span class="edu-text">الاختبار القبلي</span>
             </a>
-            <a href="t3unit2content.html" class="edu-item" target="_self">
+            <a href="t3unit2content.html" id="contentLink" class="edu-item locked" target="_self" title="أكمل الاختبار القبلي أولاً لفتح المحتوى">
                 <span class="edu-icon">📖</span>
                 <span class="edu-text">محتوى الوحدة</span>
             </a>
@@ -594,7 +605,24 @@
     </main>
     <script>
 
-    const questions = [
+            // ===== قفل/فتح أيقونة محتوى الوحدة =====
+        const CONTENT_STORAGE_KEY = 'pretestDone_' + location.pathname;
+
+        function unlockContent() {
+            const link = document.getElementById('contentLink');
+            if (link) {
+                link.classList.remove('locked');
+                link.removeAttribute('title');
+            }
+            localStorage.setItem(CONTENT_STORAGE_KEY, '1');
+        }
+
+        // إذا كان المتدرب قد أنهى الاختبار القبلي من قبل، يبقى المحتوى مفتوحاً
+        if (localStorage.getItem(CONTENT_STORAGE_KEY) === '1') {
+            unlockContent();
+        }
+
+        const questions = [
             {
                 text: "1. 	من الأفضل أن تتضمن الأسئلة مستويات معرفية مختلفة، مثل التذكر، الفهم، والتطبيق",
                 options: ["√ صحيح", "× خطأ"],
@@ -616,77 +644,90 @@
                 correct: 1
             }
         ];
-        let current = 0;
-        let answers = new Array(questions.length).fill(null);
 
-        function renderQuestion() {
-            const q = questions[current];
-            const total = questions.length;
-            
-            document.getElementById('qText').textContent = q.text;
-            document.getElementById('qLabel').textContent = `سؤال ${current + 1}`;
-            document.getElementById('qCounter').textContent = `السؤال ${current + 1} من ${total}`;
-            
-            const pct = Math.round(((current + 1) / total) * 100);
-            document.getElementById('qPercent').textContent = pct + '%';
-            document.getElementById('progressFill').style.width = pct + '%';
+let current = 0;
+let answers = new Array(questions.length).fill(null);
 
-            const grid = document.getElementById('optionsGrid');
-            grid.innerHTML = '';
-            
-            q.options.forEach((opt, i) => {
-                const div = document.createElement('div');
-                div.className = 'quiz-option' + (answers[current] === i ? ' selected' : '');
-                div.innerHTML = `<span class="option-indicator">${i === 0 ? 'أ' : 'ب'}</span><span>${opt}</span>`;
-                div.onclick = () => {
-                    answers[current] = i;
-                    renderQuestion();
-                };
-                grid.appendChild(div);
-            });
+// الحروف العربية
+const letters = ['أ', 'ب', 'ج', 'د'];
 
-            document.getElementById('btnPrev').style.visibility = current === 0 ? 'hidden' : 'visible';
-            const btnNext = document.getElementById('btnNext');
-            btnNext.disabled = answers[current] === null;
-            btnNext.textContent = current === total - 1 ? 'إنهاء الاختبار 🏁' : 'التالي ←';
-        }
+function renderQuestion() {
+    const q = questions[current];
+    const total = questions.length;
 
-        function navigate(dir) {
-            if (dir === 1 && current === questions.length - 1) {
-                showResult();
-                return;
-            }
-            current += dir;
+    document.getElementById('qText').textContent = q.text;
+    document.getElementById('qLabel').textContent = `سؤال ${current + 1}`;
+    document.getElementById('qCounter').textContent = `السؤال ${current + 1} من ${total}`;
+
+    const pct = Math.round(((current + 1) / total) * 100);
+    document.getElementById('qPercent').textContent = pct + '%';
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    const grid = document.getElementById('optionsGrid');
+    grid.innerHTML = '';
+
+    q.options.forEach((opt, i) => {
+        const div = document.createElement('div');
+        div.className = 'quiz-option' + (answers[current] === i ? ' selected' : '');
+
+        div.innerHTML = `
+            <span class="option-indicator">${letters[i]}</span>
+            <span>${opt}</span>
+        `;
+
+        div.onclick = () => {
+            answers[current] = i; // تخزين رقم الإجابة (يطابق رقم الإجابة الصحيحة correct)
             renderQuestion();
-        }
+        };
 
-        function showResult() {
-            document.getElementById('quizContent').style.display = 'none';
-            document.getElementById('quizResult').style.display = 'block';
+        grid.appendChild(div);
+    });
 
-            const correctCount = answers.filter((a, i) => a === questions[i].correct).length;
-            const scorePct = Math.round((correctCount / questions.length) * 100);
-            
-            document.getElementById('resultPercent').textContent = scorePct + '%';
-            
-            let title = "";
-            let sub = "";
-            if (scorePct >= 80) {
-                title = "أداء متميز! 🌟";
-                sub = "لقد أحسنت صنعاً، أنت تمتلك خلفية قوية عن الاختبارات الإلكترونية.";
-            } else if (scorePct >= 50) {
-                title = "أداء جيد 👍";
-                sub = "بداية موفقة، ستتعلم المزيد من التفاصيل خلال دراسة الوحدة.";
-            } else {
-                title = "فرصة جيدة للتعلم 📚";
-                sub = "هذا الاختبار قبلي لتقييم مستواك، المحتوى القادم سيوضح لك كافة المفاهيم.";
-            }
+    document.getElementById('btnPrev').style.visibility = current === 0 ? 'hidden' : 'visible';
 
-            document.getElementById('resultTitle').textContent = title;
-            document.getElementById('resultSub').textContent = sub;
-        }
+    const btnNext = document.getElementById('btnNext');
+    btnNext.disabled = answers[current] === null;
+    btnNext.textContent = current === total - 1 ? 'إنهاء الاختبار 🏁' : 'التالي ←';
+}
 
-        renderQuestion();
+function navigate(dir) {
+    if (dir === 1 && current === questions.length - 1) {
+        showResult();
+        return;
+    }
+    current += dir;
+    renderQuestion();
+}
+
+function showResult() {
+    document.getElementById('quizContent').style.display = 'none';
+    document.getElementById('quizResult').style.display = 'block';
+    unlockContent(); // فتح أيقونة المحتوى بعد إنهاء الاختبار القبلي بالكامل
+
+    const correctCount = answers.filter((a, i) => a === questions[i].correct).length;
+    const scorePct = Math.round((correctCount / questions.length) * 100);
+
+    document.getElementById('resultPercent').textContent = scorePct + '%';
+
+    let title = "";
+    let sub = "";
+
+    if (scorePct >= 80) {
+        title = "أداء متميز 🌟";
+        sub = "ممتاز! لديك فهم قوي.";
+    } else if (scorePct >= 50) {
+        title = "أداء جيد 👍";
+        sub = "بداية جيدة، يمكن التحسن أكثر.";
+    } else {
+        title = "تحتاج مراجعة 📚";
+        sub = "راجع المحتوى مرة أخرى.";
+    }
+
+    document.getElementById('resultTitle').textContent = title;
+    document.getElementById('resultSub').textContent = sub;
+}
+
+renderQuestion();
     </script>
 </body>
 </html>

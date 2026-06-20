@@ -474,6 +474,24 @@
     .modal-header, .modal-body, .modal-footer { padding-top: 8px; padding-bottom: 8px; }
 }
 
+
+        /* قفل أيقونة المحتوى */
+        .edu-item.content-locked {
+            opacity: 0.45;
+            cursor: not-allowed;
+            pointer-events: none;
+            filter: grayscale(0.5);
+        }
+        .edu-item.content-unlocked {
+            background: var(--gold) !important;
+            border-color: var(--white) !important;
+            pointer-events: all !important;
+            animation: pulseGold 1.8s ease infinite;
+        }
+        @keyframes pulseGold {
+            0%,100% { box-shadow: 0 0 0 0 rgba(184,134,11,0.5); }
+            50%      { box-shadow: 0 0 0 8px rgba(184,134,11,0); }
+        }
     </style>
 </head>
 <body>
@@ -535,7 +553,7 @@
                 <span class="edu-icon">📝</span>
                 <span class="edu-text">الاختبار القبلي</span>
             </a>
-            <a href="t1unit3content.html" class="edu-item" target="_self">
+            <a href="t1unit3content.html" class="edu-item content-locked" id="contentBtn"content.html" class="edu-item content-locked" id="contentBtn" target="_self">
                 <span class="edu-icon">📖</span>
                 <span class="edu-text">محتوى الوحدة</span>
             </a>
@@ -657,6 +675,7 @@
         }
 
         function showResult() {
+    unlockContent();
             document.getElementById('quizContent').style.display = 'none';
             document.getElementById('quizResult').style.display = 'block';
 
@@ -681,6 +700,15 @@
             document.getElementById('resultTitle').textContent = title;
             document.getElementById('resultSub').textContent = sub;
         }
+
+        function unlockContent() {
+            const btn = document.getElementById('contentBtn');
+            if (btn) {
+                btn.classList.remove('content-locked');
+                btn.classList.add('content-unlocked');
+            }
+        }
+
 
         renderQuestion();
     </script>

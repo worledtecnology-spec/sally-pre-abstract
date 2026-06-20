@@ -474,6 +474,17 @@
     .modal-header, .modal-body, .modal-footer { padding-top: 8px; padding-bottom: 8px; }
 }
 
+    
+        /* قفل أيقونة محتوى الوحدة حتى إتمام الاختبار القبلي بالكامل */
+        .edu-item.locked {
+            opacity: 0.45;
+            cursor: not-allowed;
+            pointer-events: none;
+            filter: grayscale(60%);
+        }
+        .edu-item.locked .edu-text::after {
+            content: " 🔒";
+        }
     </style>
 </head>
 <body>
@@ -535,7 +546,7 @@
                 <span class="edu-icon">📝</span>
                 <span class="edu-text">الاختبار القبلي</span>
             </a>
-            <a href="t2unit4content.html" class="edu-item" target="_self">
+            <a href="t2unit4content.html" id="contentLink" class="edu-item locked" target="_self" title="أكمل الاختبار القبلي أولاً لفتح المحتوى">
                 <span class="edu-icon">📖</span>
                 <span class="edu-text">محتوى الوحدة</span>
             </a>
@@ -595,7 +606,24 @@
     </main>
     <script>
 
-    const questions = [
+            // ===== قفل/فتح أيقونة محتوى الوحدة =====
+        const CONTENT_STORAGE_KEY = 'pretestDone_' + location.pathname;
+
+        function unlockContent() {
+            const link = document.getElementById('contentLink');
+            if (link) {
+                link.classList.remove('locked');
+                link.removeAttribute('title');
+            }
+            localStorage.setItem(CONTENT_STORAGE_KEY, '1');
+        }
+
+        // إذا كان المتدرب قد أنهى الاختبار القبلي من قبل، يبقى المحتوى مفتوحاً
+        if (localStorage.getItem(CONTENT_STORAGE_KEY) === '1') {
+            unlockContent();
+        }
+
+        const questions = [
     {
         text: "1.	العنصر الذي يتيح لك إضافة عنوان ووصف للنموذج.....................  ",
         options: [
@@ -641,7 +669,7 @@ function renderQuestion() {
 
     q.options.forEach((opt, i) => {
         const div = document.createElement('div');
-        div.className = 'quiz-option' + (answers[current] === letters[i] ? ' selected' : '');
+        div.className = 'quiz-option' + (answers[current] === i ? ' selected' : '');
 
         div.innerHTML = `
             <span class="option-indicator">${letters[i]}</span>
@@ -649,7 +677,7 @@ function renderQuestion() {
         `;
 
         div.onclick = () => {
-            answers[current] = letters[i]; // تخزين (أ / ب / ج / د)
+            answers[current] = i; // تخزين رقم الإجابة (يطابق رقم الإجابة الصحيحة correct)
             renderQuestion();
         };
 
@@ -675,6 +703,7 @@ function navigate(dir) {
 function showResult() {
     document.getElementById('quizContent').style.display = 'none';
     document.getElementById('quizResult').style.display = 'block';
+    unlockContent(); // فتح أيقونة المحتوى بعد إنهاء الاختبار القبلي بالكامل
 
     const correctCount = answers.filter((a, i) => a === questions[i].correct).length;
     const scorePct = Math.round((correctCount / questions.length) * 100);

@@ -474,6 +474,24 @@
     .modal-box { border-radius: 12px; }
     .modal-header, .modal-body, .modal-footer { padding-top: 8px; padding-bottom: 8px; }
 }
+
+        /* قفل أيقونة المحتوى */
+        .edu-item.content-locked {
+            opacity: 0.45;
+            cursor: not-allowed;
+            pointer-events: none;
+            filter: grayscale(0.5);
+        }
+        .edu-item.content-unlocked {
+            background: var(--gold) !important;
+            border-color: var(--white) !important;
+            pointer-events: all !important;
+            animation: pulseGold 1.8s ease infinite;
+        }
+        @keyframes pulseGold {
+            0%,100% { box-shadow: 0 0 0 0 rgba(184,134,11,0.5); }
+            50%      { box-shadow: 0 0 0 8px rgba(184,134,11,0); }
+        }
     </style>
 </head>
 <body>
@@ -517,7 +535,7 @@
         </div>
     </nav>
     <div class="education-nav">
-        <h1 class="section-title">الموضوع الثاني</h1>
+        <h1 class="section-title">الموضوع الأول</h1>
         <div class="edu-container">
              <a href="#" class="edu-item" target="_self">
                 <span class="edu-icon">📌</span>
@@ -527,7 +545,7 @@
                 <span class="edu-icon">📌</span>
                 <span class="edu-text">عنوان الوحدة</span>
             </a>
-            <a href="t2unit2aims.html" class="edu-item" target="_self">
+            <a href="t1unit2aims.html" class="edu-item" target="_self">
                 <span class="edu-icon">🎯</span>
                 <span class="edu-text">الهدف من الدراسة</span>
             </a>
@@ -535,7 +553,7 @@
                 <span class="edu-icon">📝</span>
                 <span class="edu-text">الاختبار القبلي</span>
             </a>
-            <a href="t2unit2content.html" class="edu-item" target="_self">
+            <a href="t1unit2content.html" class="edu-item content-locked" id="contentBtn" target="_self">
                 <span class="edu-icon">📖</span>
                 <span class="edu-text">محتوى الوحدة</span>
             </a>
@@ -595,27 +613,27 @@
     <script>
 
     const questions = [
-            {
-                text: "1-	أي من الخيارات التالية يُعد من مميزات Microsoft Forms...............",
-                options: [
-                    "دعم التعاون الجماعي ",
-                    "عدم إمكانية تخصيص النماذج   ",
-                    "لا يدعم الهواتف الذكية ",
-                    "لا يمكن تصحيح الاختبارات تلقائيًا  "
-                ],
-                correct: 1   /* ب */
-            },
-            {
-                text: "2-	الميزة الأساسية التي يوفرها Microsoft Forms عند إنشاء الاختبارات الإلكترونية..............",
-                options: [
-                    "تصحيح تلقائي وإظهار النتائج فوراً    ",
-                    " دعم تشغيل الألعاب فقط   ",
-                    "عدم القدرة على تصدير البيانات  ",
-                    "يعمل فقط على أجهزة الكمبيوتر    "
-                ],
-                correct: 0   /* ب */
-            }
-        ];
+    {
+        text: "1. أي من الآتي يُعد من مزايا الاختبارات الإلكترونية؟",
+        options: [
+            "الحاجة إلى أوراق وطباعة",
+            "النتائج الفورية وتحليل البيانات",
+            "زيادة الوقت اللازم للتصحيح",
+            "جميع ما سبق"
+        ],
+        correct: "ب"
+    },
+    {
+        text: "2. الهدف الرئيسي من استخدام الاختبارات الإلكترونية في التعليم؟",
+        options: [
+            "زيادة عبء العمل على المعلمين",
+            "توفير تقييم موضوعي وسريع",
+            "تقليل تفاعل الطلاب",
+            "الاعتماد الكلي على الأسئلة المقالية"
+        ],
+        correct: "ب"
+    }
+];
 
 let current = 0;
 let answers = new Array(questions.length).fill(null);
@@ -672,6 +690,8 @@ function navigate(dir) {
 }
 
 function showResult() {
+    unlockContent();
+    unlockContent();
     document.getElementById('quizContent').style.display = 'none';
     document.getElementById('quizResult').style.display = 'block';
 
