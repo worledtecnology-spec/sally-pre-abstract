@@ -509,73 +509,113 @@
 
     <div class="progress-wrapper">
         <div class="progress-bar">
-            <div class="progress-fill"></div>
+            <div class="progress-fill" id="progressFill" style="height:6px; background:var(--gold); border-radius:10px; transition: width .3s ease;"></div>
         </div>
     </div>
 
-    <h2 class="quiz-question-text">  عند تغيير لغة واجهة الموقع تتغير جميع القوائم والأزرار الى اللغة المختارة.</h2>
+    <div id="qCounter" style="text-align:center; font-weight:700; color: var(--navy-light); margin-bottom: 10px; font-size: 14px;"></div>
 
-    <div class="options-grid" id="optionsGrid">
-        <div class="opt-card" onclick="verifyAnswer(this, false)">
-            <span>أ. إجابة خطأ.</span>
-        </div>
-        
-        <div class="opt-card" onclick="verifyAnswer(this, true)">
-            <span>ب. إجابة صحيحة.</span>
-        </div>
-    </div>
+    <h2 class="quiz-question-text" id="qText"></h2>
+
+    <div class="options-grid" id="optionsGrid"></div>
 
     <div id="resultMsg" style="text-align: center; margin-top: 15px; font-weight: 700; font-size: 16px; min-height: 24px;"></div>
+
+    <div style="text-align:center; margin-top: 10px;">
+        <button id="nextBtn" onclick="nextQuestion()" style="display:none; background: var(--navy); color: var(--gold-light); border:none; padding: 10px 28px; border-radius: 25px; font-weight:700; font-size:14px; cursor:pointer;">السؤال التالي ←</button>
+    </div>
 </main>
 
 <script>
-function verifyAnswer(element, isCorrect) {
+const questions = [
+    {
+        text: "عند كتابة الأسئلة باللغة العربية يتم تلقائيًا محاذاة النص من اليمين إلى اليسار.",
+        correct: true
+    },
+    {
+        text: "لا يمكن كتابة نص إنجليزي داخل نموذج عربي.",
+        correct: false
+    },
+    {
+        text: "من أهداف ضبط اتجاه النموذج جعله متوافقًا مع اللغة المستخدمة.",
+        correct: true
+    },
+    {
+        text: "تغيير لغة النموذج يؤدي إلى حذف الأسئلة الموجودة تلقائيًا.",
+        correct: false
+    }
+];
+
+let current = 0;
+
+function renderQuestion() {
+    const q = questions[current];
+    const total = questions.length;
+
+    document.getElementById('qText').textContent = q.text;
+    document.getElementById('qCounter').textContent = `السؤال ${current + 1} من ${total}`;
+    document.getElementById('progressFill').style.width = Math.round(((current + 1) / total) * 100) + '%';
+    document.getElementById('resultMsg').innerHTML = '';
+    document.getElementById('nextBtn').style.display = 'none';
+
+    const grid = document.getElementById('optionsGrid');
+    grid.innerHTML = '';
+    grid.classList.remove('disabled-grid');
+
+    const wrongCard = document.createElement('div');
+    wrongCard.className = 'opt-card';
+    wrongCard.innerHTML = '<span>أ. إجابة خطأ.</span>';
+    wrongCard.onclick = () => verifyAnswer(wrongCard, false);
+
+    const rightCard = document.createElement('div');
+    rightCard.className = 'opt-card';
+    rightCard.innerHTML = '<span>ب. إجابة صحيحة.</span>';
+    rightCard.onclick = () => verifyAnswer(rightCard, true);
+
+    grid.appendChild(wrongCard);
+    grid.appendChild(rightCard);
+}
+
+function verifyAnswer(element, chosenTrue) {
     const grid = document.getElementById('optionsGrid');
     const msg = document.getElementById('resultMsg');
-    
-    // منع الضغط المتكرر
+
+    if (grid.classList.contains('disabled-grid')) return;
     grid.classList.add('disabled-grid');
+
+    const isCorrect = chosenTrue === questions[current].correct;
+    const allCards = document.querySelectorAll('.opt-card');
+    const correctCard = questions[current].correct ? allCards[1] : allCards[0];
 
     if (isCorrect) {
         element.classList.add('correct');
+        element.innerHTML += ' <span>✅</span>';
         msg.innerHTML = "✨ أحسنت! إجابة صحيحة";
         msg.style.color = "#28a745";
     } else {
         element.classList.add('wrong');
+        element.innerHTML += ' <span>❌</span>';
+        correctCard.classList.add('correct');
+        correctCard.innerHTML += ' <span>✅</span>';
         msg.innerHTML = "❌ الإجابة غير صحيحة، حاول التركيز أكثر";
         msg.style.color = "#dc3545";
-        
-        // إظهار الإجابة الصحيحة (الثانية في المصفوفة)
-        const allCards = document.querySelectorAll('.opt-card');
-        allCards[1].classList.add('correct');
     }
-}
 
-function verifyAnswer(element, isCorrect) {
-    const grid = document.getElementById('optionsGrid');
-    const msg = document.getElementById('resultMsg');
-    
-    if (grid.classList.contains('disabled-grid')) return;
-
-    grid.classList.add('disabled-grid');
-
-    if (isCorrect) {
-        element.classList.add('correct');
-        element.innerHTML += ' <span>✅</span>'; // إضافة أيقونة داخل الاختيار
-        msg.innerHTML = "✨ أحسنت! إجابة صحيحة ومتميزة";
-        msg.style.color = "#28a745";
+    const nextBtn = document.getElementById('nextBtn');
+    if (current < questions.length - 1) {
+        nextBtn.style.display = 'inline-block';
     } else {
-        element.classList.add('wrong');
-        element.innerHTML += ' <span>❌</span>'; // إضافة أيقونة داخل الاختيار
-        msg.innerHTML = "❌ محاولة قريبة، الإجابة الصحيحة هي (ب)";
-        msg.style.color = "#dc3545";
-        
-        // إبراز الإجابة الصحيحة بلطف
-        const allCards = document.querySelectorAll('.opt-card');
-        allCards[1].classList.add('correct');
-        allCards[1].innerHTML += ' <span>✅</span>';
+        nextBtn.style.display = 'none';
+        msg.innerHTML += "<br><span style='font-size:14px; color: var(--navy-light);'>🎉 انتهيت من التقويم الذاتي</span>";
     }
 }
+
+function nextQuestion() {
+    current++;
+    renderQuestion();
+}
+
+renderQuestion();
 </script>
 </body>
 </html>

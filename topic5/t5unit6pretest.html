@@ -473,6 +473,15 @@
     .modal-box { border-radius: 12px; }
     .modal-header, .modal-body, .modal-footer { padding-top: 8px; padding-bottom: 8px; }
 }
+        /* منع أي سكرول في الصفحة - احتواء كل المحتوى داخل ارتفاع الشاشة */
+        html, body {
+            height: 100vh;
+            overflow: hidden;
+        }
+        body { min-height: 0; }
+        .main-nav { position: relative; top: auto; }
+        .unit-hero-container { padding: 2px; }
+        .quiz-card { max-height: 100%; overflow: hidden; }
     </style>
 </head>
 <body>
@@ -595,7 +604,47 @@
 
     const questions = [
     {
-        text: "1. يمكن للمعلم التأكد من أن التوقيت مضبوط بشكل صحيح  .............................  ",
+        text: "1. الهدف من تحديد زمن الاختبار...........",
+        options: [
+            "زيادة عدد الأسئلة",
+            "تحقيق تكافؤ الفرص وإدارة الوقت",
+            "تغيير نوع الأسئلة",
+            "حذف الإجابات الخاطئة"
+        ],
+        correct: 1
+    },
+    {
+        text: "2. يتم ضبط وقت بدء وانتهاء الاختبار من خلال .........",
+        options: [
+            "صفحة النتائج",
+            "قسم الإعدادات (Settings)",
+            "صفحة المشاركة",
+            "صفحة المعاينة فقط"
+        ],
+        correct: 1
+    },
+    {
+        text: "3. ما وظيفة وقت البدء (Start Time)؟",
+        options: [
+            "حذف الاختبار",
+            "تحديد موعد إغلاق الاختبار",
+            "تحديد الوقت الذي يصبح فيه الاختبار متاحًا",
+            "ترتيب الأسئلة عشوائيًا"
+        ],
+        correct: 2
+    },
+    {
+        text: "4. أي من النصائح التالية تساعد على ضبط توقيت الاختبار بفعالية؟",
+        options: [
+            "اختيار مدة قصيرة جدًا بغض النظر عن عدد الأسئلة",
+            "عدم إبلاغ الطلاب بموعد الاختبار",
+            "اختبار الإعدادات بنفسك قبل نشر الاختبار",
+            "ترك الاختبار مفتوحًا دائمًا"
+        ],
+        correct: 2
+    },
+    {
+        text: "5. يمكن للمعلم التأكد من أن التوقيت مضبوط بشكل صحيح  .............................  ",
         options: [
             "من خلال تجربة الاختبار بنفسه قبل نشره   ",
             " بالسماح لجميع الطلاب بالدخول في أي وقت    ",
@@ -605,7 +654,7 @@
         correct: 0
     },
     {
-        text: "2. عند ضبط وقت انتهاء الاختبار    ................................ ",
+        text: "6. عند ضبط وقت انتهاء الاختبار    ................................ ",
         options: [
             "  سيتم إغلاق الاختبار تلقائيًا بعد هذا الوقت   ",
             " سيستمر الطلاب في الإجابة بعد الوقت المحدد    ",
@@ -639,7 +688,7 @@ function renderQuestion() {
 
     q.options.forEach((opt, i) => {
         const div = document.createElement('div');
-        div.className = 'quiz-option' + (answers[current] === letters[i] ? ' selected' : '');
+        div.className = 'quiz-option' + (answers[current] === i ? ' selected' : '');
 
         div.innerHTML = `
             <span class="option-indicator">${letters[i]}</span>
@@ -647,7 +696,7 @@ function renderQuestion() {
         `;
 
         div.onclick = () => {
-            answers[current] = letters[i]; // تخزين (أ / ب / ج / د)
+            answers[current] = i; // تخزين رقم الإجابة (index) ليطابق نوع correct
             renderQuestion();
         };
 

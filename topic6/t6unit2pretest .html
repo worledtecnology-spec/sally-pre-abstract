@@ -178,6 +178,11 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html, body {
+            height: 100vh;
+            overflow: hidden;
+        }
+
         body {
             font-family: 'Cairo', sans-serif;
             background-color: var(--cream);
@@ -185,7 +190,6 @@
             direction: rtl;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
 
         .top-header {
@@ -281,19 +285,25 @@
         /* كارت الاختبار */
         .unit-hero-container {
             flex: 1;
+            min-height: 0;
             display: flex;
             justify-content: center;
+            align-items: center;
             padding: 3px;
+            overflow: hidden;
         }
 
         .quiz-card {
             background: var(--white);
             width: 100%;
             max-width: 750px;
+            max-height: 100%;
             border-radius: 20px;
             border: 1px solid var(--border);
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .quiz-header {
@@ -474,6 +484,27 @@
     .modal-box { border-radius: 12px; }
     .modal-header, .modal-body, .modal-footer { padding-top: 8px; padding-bottom: 8px; }
 }
+    
+        /* === منع أي سكرول نهائيًا في الصفحة === */
+        html, body {
+            height: 100vh !important;
+            height: 100dvh !important;
+            overflow: hidden !important;
+            margin: 0 !important;
+        }
+        .nav-container, .edu-container {
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .nav-container::-webkit-scrollbar, .edu-container::-webkit-scrollbar {
+            display: none;
+        }
+        .nav-item, .edu-item {
+            flex: 0 0 auto !important;
+            white-space: nowrap !important;
+        }
     </style>
 </head>
 <body>
@@ -562,7 +593,7 @@
             <div id="quizContent">
                 <div class="quiz-progress-wrap">
                     <div class="quiz-progress-info">
-                        <span id="qCounter">السؤال 1 من 3</span>
+                        <span id="qCounter">السؤال 1 من 4</span>
                         <span id="qPercent">0%</span>
                     </div>
                     <div class="quiz-progress-bar">
@@ -603,7 +634,7 @@
                     "الألوان المخصصة فقط   ",
                     "الألوان الجاهزة والألوان المخصصة والصور  "
                 ],
-                correct: 3   /* ب */
+                correct: 'د'
             },
             {
                 text: "2. الخطوة الأولى لإضافة لون خلفية للاختبار في  Microsoft Forms ....................",
@@ -613,7 +644,7 @@
                     "مشاركة الاختبار    ",
                     "حفظ التغييرات     "
                 ],
-                correct: 0   /* ب */
+                correct: 'أ'
             },
             {
                 text: "3. من العوامل التي يجب مراعاتها عند اختيار لون الخلفية  ...........................",
@@ -623,8 +654,19 @@
                     "أن يكون اللون فاتحًا دائمًا  ",
                     "أن يكون اللون متطابقًا مع لون النص    "
                 ],
-                correct: 0   /* ب */
-            }
+                correct: 'أ'
+            },
+            {
+                text: "4. الغرض من استخدام زر «معاينة» (Preview)؟",
+                options: [
+                    "حذف الاختبار",
+                    "رؤية شكل الاختبار كما سيظهر للطلاب",
+                    "تغيير نوع الأسئلة",
+                    "إغلاق النموذج"
+                ],
+                correct: 'ب'
+            },
+            
         ];
 let current = 0;
 let answers = new Array(questions.length).fill(null);

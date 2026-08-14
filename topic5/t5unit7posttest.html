@@ -21,6 +21,11 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html, body {
+            height: 100vh;
+            overflow: hidden;
+        }
+
         body {
             font-family: 'Cairo', sans-serif;
             background-color: var(--cream);
@@ -29,15 +34,14 @@
             direction: rtl;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
 
         .top-header {
             background: var(--navy);
             color: var(--gold-light);
             text-align: center;
-            padding: 12px 0;
-            font-size: 15px;
+            padding: 8px 0;
+            font-size: 14px;
             font-weight: 600;
             border-bottom: 3px solid var(--gold);
         }
@@ -157,15 +161,21 @@
 
         .unit-hero-container {
             flex: 1;
+            min-height: 0;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            padding: 20px;
+            align-items: center;
+            padding: 8px;
+            overflow: hidden;
         }
 
         .quiz-card {
             background: var(--white);
             width: 100%; max-width: 750px;
+            max-height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
             border-radius: 20px;
             border: 1px solid var(--border);
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
@@ -326,6 +336,27 @@
     .modal-box { border-radius: 12px; }
     .modal-header, .modal-body, .modal-footer { padding-top: 8px; padding-bottom: 8px; }
 }
+    
+        /* === منع أي سكرول نهائيًا في الصفحة === */
+        html, body {
+            height: 100vh !important;
+            height: 100dvh !important;
+            overflow: hidden !important;
+            margin: 0 !important;
+        }
+        .nav-container, .edu-container {
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .nav-container::-webkit-scrollbar, .edu-container::-webkit-scrollbar {
+            display: none;
+        }
+        .nav-item, .edu-item {
+            flex: 0 0 auto !important;
+            white-space: nowrap !important;
+        }
     </style>
 </head>
 <body>
@@ -427,17 +458,37 @@
         /* ✏️ الأسئلة — correct = رقم الخيار الصحيح (0=أ، 1=ب، 2=ج، 3=د) */
       const questions = [
     {
-        text: "1.	يمكن للمعلم مراجعة إجابات الطلاب قبل نشر النتائج النهائية  ",
+        text: "1. يمكن للمعلم التحكم في كيفية إظهار نتائج الاختبار للطلاب.",
+        options: ["√ صحيح", "× خطأ"],
+        correct: 0
+    },
+    {
+        text: "2. عند تفعيل عرض النتائج فورًا، تظهر درجة الطالب مباشرة بعد إرسال الاختبار.",
+        options: ["√ صحيح", "× خطأ"],
+        correct: 0
+    },
+    {
+        text: "3. إظهار النتائج لاحقًا يمنع المعلم من مراجعة الإجابات قبل نشر النتائج.",
+        options: ["√ صحيح", "× خطأ"],
+        correct: 1
+    },
+    {
+        text: "4. يتم ضبط طريقة إظهار النتائج من خلال قسم الإعدادات (Settings).",
+        options: ["√ صحيح", "× خطأ"],
+        correct: 0
+    },
+    {
+        text: "5.	يمكن للمعلم مراجعة إجابات الطلاب قبل نشر النتائج النهائية  ",
         options: ["√ صحيح", "× خطأ" ],
         correct: 0
     },
     {
-        text: "2. 	يفضل استخدام خيار إظهار النتائج لاحقًا بعد المراجعة في الاختبارات التي تحتوي على أسئلة مقاليه ",
+        text: "6. 	يفضل استخدام خيار إظهار النتائج لاحقًا بعد المراجعة في الاختبارات التي تحتوي على أسئلة مقاليه ",
         options: ["√ صحيح", "× خطأ" ],
         correct: 0
     },
     {
-        text: "3. إضافة ملاحظات على إجابات الطلاب غير ممكنة عند ضبط إظهار النتائج",
+        text: "7. إضافة ملاحظات على إجابات الطلاب غير ممكنة عند ضبط إظهار النتائج",
         options: ["√ صحيح", "× خطأ" ],                  
         correct: 1
     }

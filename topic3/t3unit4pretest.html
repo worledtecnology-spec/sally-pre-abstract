@@ -521,7 +521,7 @@
                 <span class="icon-symbol">📜</span>
                 <span>التعليمات</span>
             </a>
-            <a href="../contact.html" class="nav-item" target="_self>
+            <a href="../contact.html" class="nav-item" target="_self">
                 <span class="icon-symbol">✉️</span>
                 <span>التواصل</span>
             </a>
@@ -574,7 +574,7 @@
             <div id="quizContent">
                 <div class="quiz-progress-wrap">
                     <div class="quiz-progress-info">
-                        <span id="qCounter">السؤال 1 من 3</span>
+                        <span id="qCounter">السؤال 1 من 4</span>
                         <span id="qPercent">0%</span>
                     </div>
                     <div class="quiz-progress-bar">
@@ -625,20 +625,41 @@
 
         const questions = [
             {
-                text: "1. يمكن استخدام جدول المواصفات لضمان توازن الاختبار بين مستويات التفكير المختلفة",
+                text: "1. تساعد الأسئلة الجيدة في قياس المستوى الحقيقي للطلاب بدقة.",
                 options: ["√ صحيح", "× خطأ"],
                 correct: 0
             },
             {
-                text: "2. لا بأس في إضافة تلميحات ضمن السؤال لمساعدة الطلاب على اختيار الإجابة الصحيحة",
+                text: "2. يُفضّل استخدام أسئلة بعيدة عن الأهداف التعليمية لزيادة التنوع.",
                 options: ["√ صحيح", "× خطأ"],
                 correct: 1
             },
             {
-                text: "3. عند تصميم أسئلة المزاوجة، من الأفضل أن يكون عدد العناصر في القائمتين متساويًا",
+                text: "3. يجب أن تكون جميع الإجابات المحتملة في سؤال الاختيار من متعدد متقاربة في الصياغة والطول.",
+                options: ["√ صحيح", "× خطأ"],
+                correct: 0
+            },
+            {
+                text: "4. يمكن أن يحتوي سؤال إكمال الفراغات على أكثر من إجابة صحيحة دون توضيح.",
+                options: ["√ صحيح", "× خطأ"],
+                correct: 1
+            },
+             {
+                text: "5. يمكن استخدام جدول المواصفات لضمان توازن الاختبار بين مستويات التفكير المختلفة",
+                options: ["√ صحيح", "× خطأ"],
+                correct: 0
+            },
+            {
+                text: "6. لا بأس في إضافة تلميحات ضمن السؤال لمساعدة الطلاب على اختيار الإجابة الصحيحة",
+                options: ["√ صحيح", "× خطأ"],
+                correct: 1
+            },
+            {
+                text: "7. عند تصميم أسئلة المزاوجة، من الأفضل أن يكون عدد العناصر في القائمتين متساويًا",
                 options: ["√ صحيح", "× خطأ"],
                 correct: 0
             }
+
         ];
 let current = 0;
 let answers = new Array(questions.length).fill(null);

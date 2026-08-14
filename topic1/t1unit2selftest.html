@@ -328,6 +328,21 @@
     margin: 0 auto 25px;
 }
 
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e8e0d0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--gold);
+    transition: width 0.4s;
+}
+
 .opt-card {
     padding: 12px 15px; /* تصغير حجم أزرار الإجابات */
     font-size: 14px;
@@ -350,6 +365,16 @@
     box-shadow: 0 4px 6px rgba(0,0,0,0.02);
     position: relative;
     overflow: hidden;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.options-grid.disabled-grid .opt-card {
+    pointer-events: none;
 }
 
 /* تأثير الهايلايت عند مرور الماوس (Hover) */
@@ -396,11 +421,21 @@
     text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
     line-height: 1.4;
 }
+
+.quiz-q-counter {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--navy-light);
+    margin-bottom: 6px;
+}
+
 @media (max-width: 640px) {
     .hs { width: 38px; height: 38px; font-size: 12px; }
     .edu-item { min-width: 82px; }
     .modal-box { border-radius: 16px; }
     .modal-header, .modal-body, .modal-footer { padding-left: 16px; padding-right: 16px; }
+    .options-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-height: 768px) {
@@ -449,7 +484,7 @@
                 <span class="icon-symbol">📜</span>
                 <span>التعليمات</span>
             </a>
-            <a href="../contact.html" class="nav-item" target="_self>
+            <a href="../contact.html" class="nav-item" target="_self">
                 <span class="icon-symbol">✉️</span>
                 <span>التواصل</span>
             </a>
@@ -499,73 +534,119 @@
 
     <div class="progress-wrapper">
         <div class="progress-bar">
-            <div class="progress-fill"></div>
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
         </div>
     </div>
 
-    <h2 class="quiz-question-text">يمكن للطلاب أداء الاختبارات الإلكترونية من أي مكان إذا توفر الإنترنت.  (    ).</h2>
 
-    <div class="options-grid" id="optionsGrid">
-        <div class="opt-card" onclick="verifyAnswer(this, true)">
-            <span>أ. إجابة صحيحة   .</span>
-        </div>
-        
-        <div class="opt-card" onclick="verifyAnswer(this, false)">
-            <span>ب. إجابة خطأ    .</span>
-        </div>
-    </div>
+    <h2 class="quiz-question-text" id="qText"></h2>
+
+    <div class="options-grid" id="optionsGrid"></div>
 
     <div id="resultMsg" style="text-align: center; margin-top: 15px; font-weight: 700; font-size: 16px; min-height: 24px;"></div>
 </main>
 
 <script>
-function verifyAnswer(element, isCorrect) {
+const questions = [
+    {
+        text: "1. أي نوع من الوسائط يمكن إدراجه في الاختبارات الإلكترونية؟",
+        options: [
+            "الصور فقط",
+            "النصوص فقط",
+            "الفيديوهات والصوتيات والصور التفاعلية",
+            "الجداول الورقية فقط"
+        ],
+        correct: 2 // ج
+    },
+    {
+        text: "2. ما الهدف من دمج التكنولوجيا في عمليات التقييم؟",
+        options: [
+            "زيادة التعقيد",
+            "تحقيق كفاءة عالية وتعزيز جودة النتائج",
+            "تقليل دقة التقييم",
+            "إلغاء الاختبارات التقليدية تمامًا"
+        ],
+        correct: 1 // ب
+    },
+    {
+        text: "3. أي عبارة تعبر بدقة عن المرونة في الاختبارات الإلكترونية؟",
+        options: [
+            "إجراء الاختبار في مكان محدد فقط",
+            "إجراء الاختبار في وقت محدد دون أي خيارات",
+            "إمكانية إجراء الاختبار من أي مكان خلال فترة زمنية محددة",
+            "ضرورة الحضور الورقي إلى قاعة الاختبار"
+        ],
+        correct: 2 // ج
+    }
+];
+
+const letters = ['أ', 'ب', 'ج', 'د'];
+let current = 0;
+let answered = false;
+
+function renderQuestion() {
+    answered = false;
+    const q = questions[current];
+
+    document.getElementById('qText').textContent = q.text;
+    document.getElementById('qCounter').textContent = `السؤال ${current + 1} من ${questions.length}`;
+    document.getElementById('progressFill').style.width = Math.round(((current + 1) / questions.length) * 100) + '%';
+    document.getElementById('resultMsg').innerHTML = '';
+
+    const grid = document.getElementById('optionsGrid');
+    grid.classList.remove('disabled-grid');
+    grid.innerHTML = '';
+
+    q.options.forEach((opt, i) => {
+        const div = document.createElement('div');
+        div.className = 'opt-card';
+        div.innerHTML = `<span>${letters[i]}. ${opt}</span>`;
+        div.onclick = () => verifyAnswer(div, i);
+        grid.appendChild(div);
+    });
+}
+
+function verifyAnswer(element, i) {
+    if (answered) return;
+    answered = true;
+
     const grid = document.getElementById('optionsGrid');
     const msg = document.getElementById('resultMsg');
-    
-    // منع الضغط المتكرر
+    const q = questions[current];
     grid.classList.add('disabled-grid');
 
-    if (isCorrect) {
+    const allCards = document.querySelectorAll('.opt-card');
+
+    if (i === q.correct) {
         element.classList.add('correct');
+        element.innerHTML += ' <span>✅</span>';
         msg.innerHTML = "✨ أحسنت! إجابة صحيحة";
         msg.style.color = "#28a745";
     } else {
         element.classList.add('wrong');
-        msg.innerHTML = "❌ الإجابة غير صحيحة، حاول التركيز أكثر";
+        element.innerHTML += ' <span>❌</span>';
+        msg.innerHTML = "❌ محاولة قريبة، الإجابة الصحيحة هي (" + letters[q.correct] + ")";
         msg.style.color = "#dc3545";
-        
-        // إظهار الإجابة الصحيحة (الثانية في المصفوفة)
-        const allCards = document.querySelectorAll('.opt-card');
-        allCards[1].classList.add('correct');
+
+        allCards[q.correct].classList.add('correct');
+        allCards[q.correct].innerHTML += ' <span>✅</span>';
     }
+
+    setTimeout(() => {
+        if (current < questions.length - 1) {
+            current++;
+            renderQuestion();
+        } else {
+            document.getElementById('qText').textContent = "🎉 أحسنت! أنهيت التقويم الذاتي";
+            document.getElementById('optionsGrid').innerHTML = '';
+            document.getElementById('qCounter').textContent = 'اكتمل التقويم الذاتي';
+            msg.innerHTML = "يمكنك الآن الانتقال للنشاط التعليمي التالي.";
+            msg.style.color = "var(--navy-light)";
+        }
+    }, 1400);
 }
 
-function verifyAnswer(element, isCorrect) {
-    const grid = document.getElementById('optionsGrid');
-    const msg = document.getElementById('resultMsg');
-    
-    if (grid.classList.contains('disabled-grid')) return;
-
-    grid.classList.add('disabled-grid');
-
-    if (isCorrect) {
-        element.classList.add('correct');
-        element.innerHTML += ' <span>✅</span>'; // إضافة أيقونة داخل الاختيار
-        msg.innerHTML = "✨ أحسنت! إجابة صحيحة ومتميزة";
-        msg.style.color = "#28a745";
-    } else {
-        element.classList.add('wrong');
-        element.innerHTML += ' <span>❌</span>'; // إضافة أيقونة داخل الاختيار
-        msg.innerHTML = "❌ محاولة قريبة، الإجابة الصحيحة هي (ب)";
-        msg.style.color = "#dc3545";
-        
-        // إبراز الإجابة الصحيحة بلطف
-        const allCards = document.querySelectorAll('.opt-card');
-        allCards[1].classList.add('correct');
-        allCards[1].innerHTML += ' <span>✅</span>';
-    }
-}
+renderQuestion();
 </script>
 </body>
 </html>

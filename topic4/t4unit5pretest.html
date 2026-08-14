@@ -509,7 +509,7 @@
                 <span class="icon-symbol">📜</span>
                 <span>التعليمات</span>
             </a>
-            <a href="../contact.html" class="nav-item" target="_self>
+            <a href="../contact.html" class="nav-item" target="_self">
                 <span class="icon-symbol">✉️</span>
                 <span>التواصل</span>
             </a>
@@ -561,7 +561,7 @@
             <div id="quizContent">
                 <div class="quiz-progress-wrap">
                     <div class="quiz-progress-info">
-                        <span id="qCounter">السؤال 1 من 3</span>
+                        <span id="qCounter">السؤال 1 من 5</span>
                         <span id="qPercent">0%</span>
                     </div>
                     <div class="quiz-progress-bar">
@@ -595,17 +595,42 @@
 
     const questions = [
     {
-        text: "1. 	يمكن تفعيل خيار التصحيح التلقائي للأسئلة المغلقة مثل الاختيار من متعدد  ",
+        text: "1. زر «إضافة سؤال» يُستخدم لحذف الأسئلة من الاختبار.",
+        options: ["√ صحيح", "× خطأ"],
+        correct: 1
+    },
+    {
+        text: "2. نوع السؤال «اختيار من متعدد» يسمح بتحديد إجابة واحدة أو أكثر.",
         options: ["√ صحيح", "× خطأ"],
         correct: 0
     },
     {
-        text: "2. 	يدعم Microsoft Forms ترتيب الأسئلة عشوائيًا لمنع الغش ",
+        text: "3. نوع السؤال «إجابة قصيرة» يُستخدم للأسئلة المفتوحة التي تتطلب إجابة نصية.",
         options: ["√ صحيح", "× خطأ"],
         correct: 0
     },
     {
-        text: "3. لا يمكن لمستخدمي Microsoft Forms إضافة صور أو مقاطع فيديو إلى الأسئلة",
+        text: "4. نوع السؤال «التصنيف» يُستخدم لاختيار تاريخ معين.",
+        options: ["√ صحيح", "× خطأ"],
+        correct: 1
+    },
+    {
+        text: "5. نوع السؤال «الترتيب» يتيح للطلاب ترتيب العناصر حسب الأولوية.",
+        options: ["√ صحيح", "× خطأ"],
+        correct: 0
+    },
+     {
+        text: "5. 	يمكن تفعيل خيار التصحيح التلقائي للأسئلة المغلقة مثل الاختيار من متعدد  ",
+        options: ["√ صحيح", "× خطأ"],
+        correct: 0
+    },
+    {
+        text: "6. 	يدعم Microsoft Forms ترتيب الأسئلة عشوائيًا لمنع الغش ",
+        options: ["√ صحيح", "× خطأ"],
+        correct: 0
+    },
+    {
+        text: "7. لا يمكن لمستخدمي Microsoft Forms إضافة صور أو مقاطع فيديو إلى الأسئلة",
         options: ["√ صحيح", "× خطأ"],
         correct: 0
     }
@@ -634,7 +659,7 @@ function renderQuestion() {
 
     q.options.forEach((opt, i) => {
         const div = document.createElement('div');
-        div.className = 'quiz-option' + (answers[current] === letters[i] ? ' selected' : '');
+        div.className = 'quiz-option' + (answers[current] === i ? ' selected' : '');
 
         div.innerHTML = `
             <span class="option-indicator">${letters[i]}</span>
@@ -642,7 +667,7 @@ function renderQuestion() {
         `;
 
         div.onclick = () => {
-            answers[current] = letters[i]; // تخزين (أ / ب / ج / د)
+            answers[current] = i; // تخزين رقم الإجابة (يطابق رقم الإجابة الصحيحة correct)
             renderQuestion();
         };
 

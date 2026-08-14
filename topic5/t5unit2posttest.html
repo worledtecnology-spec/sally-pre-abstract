@@ -21,6 +21,11 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html, body {
+            height: 100vh;
+            overflow: hidden;
+        }
+
         body {
             font-family: 'Cairo', sans-serif;
             background-color: var(--cream);
@@ -29,15 +34,14 @@
             direction: rtl;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
 
         .top-header {
             background: var(--navy);
             color: var(--gold-light);
             text-align: center;
-            padding: 12px 0;
-            font-size: 15px;
+            padding: 8px 0;
+            font-size: 14px;
             font-weight: 600;
             border-bottom: 3px solid var(--gold);
         }
@@ -157,19 +161,24 @@
 
         .unit-hero-container {
             flex: 1;
+            min-height: 0;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            padding: 20px;
+            align-items: center;
+            padding: 8px;
+            overflow: hidden;
         }
 
         .quiz-card {
             background: var(--white);
             width: 100%; max-width: 750px;
+            max-height: 100%;
             border-radius: 20px;
             border: 1px solid var(--border);
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .quiz-header { background: var(--navy); padding: 8px; text-align: center; }
@@ -432,7 +441,37 @@
         /* ✏️ الأسئلة — correct = رقم الخيار الصحيح (0=أ، 1=ب، 2=ج، 3=د) */
         const questions = [
             {
-                text: "1. أي من البيانات التالية يُفضل أن يكون إجباريًا في الاختبار   .................................",
+                text: "1. ما الهدف من وصف الاختبار؟",
+                options: [
+                    "تغيير نوع الأسئلة",
+                    "تقديم معلومات عن عدد الأسئلة والزمن",
+                    "حذف بيانات الطلاب",
+                    "مشاركة الاختبار فقط"
+                ],
+                correct: 1   /* ب */
+            },
+            {
+                text: "2. أي نوع من الأسئلة يُستخدم لجمع اسم الممتحن؟",
+                options: [
+                    "اختيار من متعدد",
+                    "تصنيف",
+                    "نص قصير",
+                    "تاريخ"
+                ],
+                correct: 2   /* ج */
+            },
+            {
+                text: "3. الخطوة التي تضمن التأكد من وجود جميع البيانات الأساسية؟",
+                options: [
+                    "حذف الوصف",
+                    "معاينة النموذج",
+                    "تغيير اللغة",
+                    "إغلاق المتصفح"
+                ],
+                correct: 1   /* ب */
+            },
+            {
+                text: "4. أي من البيانات التالية يُفضل أن يكون إجباريًا في الاختبار   .................................",
                 options: [
                     "اسم الممتحن",
                     "البريد الإلكتروني ",
@@ -442,7 +481,7 @@
                 correct: 3   /* ب */
             },
             {
-                text: "2.أول عنصر يجب إضافته عند إنشاء اختبار في   Microsoft Forms .....................",
+                text: "5.أول عنصر يجب إضافته عند إنشاء اختبار في   Microsoft Forms .....................",
                 options: [
                     "اسم الممتحن",
                     "البريد الإلكتروني ",

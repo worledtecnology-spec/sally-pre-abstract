@@ -19,6 +19,11 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html, body {
+            height: 100vh;
+            overflow: hidden;
+        }
+
         body {
             font-family: 'Cairo', sans-serif;
             background-color: var(--cream);
@@ -27,15 +32,14 @@
             direction: rtl;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
  /* 1. العنوان العلوي */
         .top-header {
             background: var(--navy);
             color: var(--gold-light);
             text-align: center;
-            padding: 12px 0;
-            font-size: 15px;
+            padding: 8px 0;
+            font-size: 14px;
             font-weight: 600;
             border-bottom: 3px solid var(--gold);
         }
@@ -126,7 +130,7 @@
         /* 2. قسم الأيقونات التعليمية (بديل عنوان البيئة) */
         .education-nav {
             background: var(--accent-teal);
-            padding: 15px 0;
+            padding: 8px 0;
             border-bottom: 3px solid var(--gold);
         }
 
@@ -284,13 +288,27 @@
 /* الكارت الرئيسي - تقليل المسافات الداخلية (padding) */
 .quiz-container {
     max-width: 850px;
-    margin: 80px auto;
+    width: 100%;
+    margin: 0 auto;
     position: relative;
     background: var(--white);
     border-radius: 25px;
-    padding: 10px 23px 4px; /* تقليل الارتفاع من خلال الـ padding */
+    padding: 20px 23px 4px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     border: 1px solid var(--border);
+    max-height: 100%;
+    overflow: visible;
+}
+
+/* حاوية تتوسط المساحة المتبقية من الشاشة */
+.quiz-container-wrap {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 8px 8px;
+    overflow: hidden;
 }
 
 /* العنوان البيضاوي الممتد */
@@ -396,6 +414,83 @@
     text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
     line-height: 1.4;
 }
+
+/* شريط التقدم */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #eef0f2;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 10px;
+    transition: width 0.4s ease;
+}
+
+/* شبكة الخيارات */
+.options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.options-grid.disabled-grid .opt-card {
+    pointer-events: none;
+}
+
+/* عداد السؤال */
+.q-counter {
+    text-align: center;
+    color: var(--navy-light, var(--navy));
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 8px;
+    opacity: 0.75;
+}
+
+/* زر التالي */
+.btn-next-self {
+    display: block;
+    margin: 18px auto 12px;
+    padding: 10px 30px;
+    background: var(--navy);
+    color: var(--gold-light);
+    border: none;
+    border-radius: 30px;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn-next-self:hover {
+    background: var(--gold);
+    color: var(--navy);
+}
+.btn-next-self:disabled {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* شاشة النتيجة النهائية */
+.self-result {
+    display: none;
+    text-align: center;
+    padding: 10px 0 20px;
+}
+.self-result h3 {
+    font-family: 'Amiri', serif;
+    font-size: 24px;
+    color: var(--navy);
+    margin-bottom: 8px;
+}
+.self-result p {
+    color: #666;
+}
+
 @media (max-width: 640px) {
     .hs { width: 38px; height: 38px; font-size: 12px; }
     .edu-item { min-width: 82px; }
@@ -414,6 +509,27 @@
     .modal-box { border-radius: 12px; }
     .modal-header, .modal-body, .modal-footer { padding-top: 8px; padding-bottom: 8px; }
 }
+    
+        /* === منع أي سكرول نهائيًا في الصفحة === */
+        html, body {
+            height: 100vh !important;
+            height: 100dvh !important;
+            overflow: hidden !important;
+            margin: 0 !important;
+        }
+        .nav-container, .edu-container {
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .nav-container::-webkit-scrollbar, .edu-container::-webkit-scrollbar {
+            display: none;
+        }
+        .nav-item, .edu-item {
+            flex: 0 0 auto !important;
+            white-space: nowrap !important;
+        }
     </style>
 </head>
 <body>
@@ -492,80 +608,143 @@
             </a>
         </div>
     </div>
+    <div class="quiz-container-wrap">
     <main class="quiz-container">
     <div class="quiz-badge-oval">
         التقويم الذاتي
     </div>
 
-    <div class="progress-wrapper">
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
+    <div id="quizContent">
+        <div class="progress-wrapper">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
         </div>
+
+        <div class="q-counter" id="qCounter">العبارة 1 من 5</div>
+
+        <h2 class="quiz-question-text" id="qText"></h2>
+
+        <div class="options-grid" id="optionsGrid"></div>
+
+        <div id="resultMsg" style="text-align: center; margin-top: 15px; font-weight: 700; font-size: 16px; min-height: 24px;"></div>
+
+        <button class="btn-next-self" id="btnNext" onclick="nextStatement()" disabled>التالي ←</button>
     </div>
 
-    <h2 class="quiz-question-text">  الخلفية تظهر للطلاب فقط على أجهزة الكمبيوتر، وليس على الهواتف.</h2>
-
-    <div class="options-grid" id="optionsGrid">
-        <div class="opt-card" onclick="verifyAnswer(this, false)">
-            <span>أ. إجابة صحيحة   .</span>
-        </div>
-        
-        <div class="opt-card" onclick="verifyAnswer(this, true)">
-            <span>ب. إجابة خطأ    .</span>
-        </div>
+    <div class="self-result" id="selfResult">
+        <h3 id="resultTitle"></h3>
+        <p id="resultSub"></p>
     </div>
-
-    <div id="resultMsg" style="text-align: center; margin-top: 15px; font-weight: 700; font-size: 16px; min-height: 24px;"></div>
 </main>
+    </div>
 
 <script>
-function verifyAnswer(element, isCorrect) {
+const statements = [
+    { text: "1. الخلفية تظهر للطلاب فقط على أجهزة الكمبيوتر، وليس على الهواتف.", correct: false },
+    { text: "2. أيقونة التصميم (Style) تكون عادة على شكل لوحة ألوان.", correct: true },
+    { text: "3. يمكن اختيار لون جاهز أو لون مخصص لخلفية الاختبار.", correct: true },
+    { text: "4. لا يمكن استخدام صورة كخلفية للاختبار الإلكتروني.", correct: false },
+    { text: "5. يتم حفظ تغييرات التصميم تلقائيًا في Microsoft Forms.", correct: true }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+function renderStatement() {
+    answered = false;
+    const s = statements[current];
+    const total = statements.length;
+
+    document.getElementById('qText').textContent = s.text;
+    document.getElementById('qCounter').textContent = `العبارة ${current + 1} من ${total}`;
+
+    const pct = Math.round(((current + 1) / total) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    document.getElementById('resultMsg').innerHTML = '';
+
+    const grid = document.getElementById('optionsGrid');
+    grid.classList.remove('disabled-grid');
+    grid.innerHTML = `
+        <div class="opt-card" onclick="verifyAnswer(this, true)">
+            <span>أ. إجابة صحيحة   .</span>
+        </div>
+        <div class="opt-card" onclick="verifyAnswer(this, false)">
+            <span>ب. إجابة خطأ    .</span>
+        </div>
+    `;
+
+    const btnNext = document.getElementById('btnNext');
+    btnNext.disabled = true;
+    btnNext.textContent = (current === total - 1) ? 'عرض النتيجة 🏁' : 'التالي ←';
+}
+
+function verifyAnswer(element, chosenTrue) {
+    if (answered) return;
+    answered = true;
+
     const grid = document.getElementById('optionsGrid');
     const msg = document.getElementById('resultMsg');
-    
-    // منع الضغط المتكرر
+    const isCorrect = (chosenTrue === statements[current].correct);
+
     grid.classList.add('disabled-grid');
+
+    const allCards = document.querySelectorAll('#optionsGrid .opt-card');
+    const correctIndex = statements[current].correct ? 0 : 1;
 
     if (isCorrect) {
         element.classList.add('correct');
+        element.innerHTML += ' <span>✅</span>';
         msg.innerHTML = "✨ أحسنت! إجابة صحيحة";
         msg.style.color = "#28a745";
+        score++;
     } else {
         element.classList.add('wrong');
+        element.innerHTML += ' <span>❌</span>';
         msg.innerHTML = "❌ الإجابة غير صحيحة، حاول التركيز أكثر";
         msg.style.color = "#dc3545";
-        
-        // إظهار الإجابة الصحيحة (الثانية في المصفوفة)
-        const allCards = document.querySelectorAll('.opt-card');
-        allCards[1].classList.add('correct');
+
+        allCards[correctIndex].classList.add('correct');
+        allCards[correctIndex].innerHTML += ' <span>✅</span>';
     }
+
+    document.getElementById('btnNext').disabled = false;
 }
 
-function verifyAnswer(element, isCorrect) {
-    const grid = document.getElementById('optionsGrid');
-    const msg = document.getElementById('resultMsg');
-    
-    if (grid.classList.contains('disabled-grid')) return;
+function nextStatement() {
+    if (current === statements.length - 1) {
+        showSelfResult();
+        return;
+    }
+    current++;
+    renderStatement();
+}
 
-    grid.classList.add('disabled-grid');
+function showSelfResult() {
+    document.getElementById('quizContent').style.display = 'none';
+    document.getElementById('selfResult').style.display = 'block';
 
-    if (isCorrect) {
-        element.classList.add('correct');
-        element.innerHTML += ' <span>✅</span>'; // إضافة أيقونة داخل الاختيار
-        msg.innerHTML = "✨ أحسنت! إجابة صحيحة ومتميزة";
-        msg.style.color = "#28a745";
+    const scorePct = Math.round((score / statements.length) * 100);
+
+    let title, sub;
+    if (scorePct >= 80) {
+        title = "أداء متميز 🌟";
+        sub = `أحسنت! أجبت بشكل صحيح على ${score} من ${statements.length}.`;
+    } else if (scorePct >= 50) {
+        title = "أداء جيد 👍";
+        sub = `أجبت بشكل صحيح على ${score} من ${statements.length}. راجع المحتوى لتحسين نتيجتك.`;
     } else {
-        element.classList.add('wrong');
-        element.innerHTML += ' <span>❌</span>'; // إضافة أيقونة داخل الاختيار
-        msg.innerHTML = "❌ محاولة قريبة، الإجابة الصحيحة هي (ب)";
-        msg.style.color = "#dc3545";
-        
-        // إبراز الإجابة الصحيحة بلطف
-        const allCards = document.querySelectorAll('.opt-card');
-        allCards[1].classList.add('correct');
-        allCards[1].innerHTML += ' <span>✅</span>';
+        title = "تحتاج مراجعة 📚";
+        sub = `أجبت بشكل صحيح على ${score} من ${statements.length}. يُنصح بمراجعة محتوى الوحدة مرة أخرى.`;
     }
+
+    document.getElementById('resultTitle').textContent = title;
+    document.getElementById('resultSub').textContent = sub;
 }
+
+renderStatement();
 </script>
 </body>
 </html>

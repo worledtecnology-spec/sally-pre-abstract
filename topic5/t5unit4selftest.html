@@ -408,6 +408,80 @@
     text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
     line-height: 1.4;
 }
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #e8e0d0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--gold);
+    transition: width 0.4s;
+}
+
+.q-counter {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy-light);
+    margin-bottom: 8px;
+}
+
+.disabled-grid .opt-card {
+    pointer-events: none;
+    cursor: default;
+}
+
+.quiz-nav-footer {
+    display: flex;
+    justify-content: center;
+    padding: 4px 0 18px;
+}
+
+.btn-next-self {
+    display: none;
+    padding: 10px 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: none;
+    font-weight: 700;
+    font-family: 'Cairo';
+    font-size: 14px;
+    background: var(--navy);
+    color: var(--gold-light);
+}
+
+.self-result {
+    display: none;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.self-result-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 800;
+    border: 5px solid var(--navy);
+    color: var(--navy);
+}
 @media (max-width: 640px) {
     .hs { width: 38px; height: 38px; font-size: 12px; }
     .edu-item { min-width: 82px; }
@@ -426,6 +500,14 @@
     .modal-box { border-radius: 12px; }
     .modal-header, .modal-body, .modal-footer { padding-top: 8px; padding-bottom: 8px; }
 }
+        /* منع أي سكرول في الصفحة - احتواء كل المحتوى داخل ارتفاع الشاشة */
+        html, body {
+            height: 100vh;
+            overflow: hidden;
+        }
+        body { min-height: 0; }
+        .main-nav { position: relative; top: auto; }
+        .quiz-container { max-height: calc(100vh - 140px); overflow: visible; margin: 30px auto 10px; }
     </style>
 </head>
 <body>
@@ -510,80 +592,154 @@
         التقويم الذاتي
     </div>
 
-    <div class="progress-wrapper">
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
+    <div id="quizContent">
+        <div class="progress-wrapper">
+            <div class="q-counter" id="qCounter">السؤال 1 من 4</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <h2 class="quiz-question-text" id="qText"></h2>
+
+        <div class="options-grid" id="optionsGrid"></div>
+
+        <div id="resultMsg" style="text-align: center; margin-top: 5px; font-weight: 700; font-size: 16px; min-height: 24px;"></div>
+
+        <div class="quiz-nav-footer">
+            <button class="btn-next-self" id="btnNext" onclick="nextQuestion()">التالي ←</button>
         </div>
     </div>
 
-    <h2 class="quiz-question-text">  الميزة التي تمكّن المعلم من تحديد الإجابة الصحيحة واحتساب الدرجات................. .</h2>
-
-    <div class="options-grid" id="optionsGrid">
-        <div class="opt-card" onclick="verifyAnswer(this, true)">
-            <span>أ.  الإعدادات .</span>
+    <div class="self-result" id="selfResult">
+        <div class="self-result-circle" id="selfResultCircle">
+            <span id="selfResultPercent">0%</span>
         </div>
-        
-        <div class="opt-card" onclick="verifyAnswer(this, false)">
-            <span>ب.  الأسئلة النصية  .</span>
-        </div>
-        <div class="opt-card" onclick="verifyAnswer(this, true)">
-            <span>ج.  خيار الاختبار (Quiz)       .</span>
-        </div>
-        <div class="opt-card" onclick="verifyAnswer(this, false)">
-            <span>د.  مشاركة النموذج .</span>
-        </div>
+        <h3 id="selfResultTitle" style="font-family:'Amiri', serif; font-size: 22px;"></h3>
+        <p id="selfResultSub" style="margin-top: 10px; color: #666;"></p>
     </div>
-
-    <div id="resultMsg" style="text-align: center; margin-top: 15px; font-weight: 700; font-size: 16px; min-height: 24px;"></div>
 </main>
 <script>
-function verifyAnswer(element, isCorrect) {
+function verifyAnswer(element, chosenIndex) {
+    if (answered) return;
+    answered = true;
+
+    const q = questions[current];
     const grid = document.getElementById('optionsGrid');
     const msg = document.getElementById('resultMsg');
-    
-    // منع الضغط المتكرر
     grid.classList.add('disabled-grid');
 
-    if (isCorrect) {
+    const allCards = document.querySelectorAll('.opt-card');
+
+    if (chosenIndex === q.correct) {
+        score++;
         element.classList.add('correct');
+        element.innerHTML += ' <span>✅</span>';
         msg.innerHTML = "✨ أحسنت! إجابة صحيحة";
         msg.style.color = "#28a745";
     } else {
         element.classList.add('wrong');
-        msg.innerHTML = "❌ الإجابة غير صحيحة، حاول التركيز أكثر";
+        element.innerHTML += ' <span>❌</span>';
+        msg.innerHTML = "❌ إجابة غير صحيحة، حاول التركيز أكثر";
         msg.style.color = "#dc3545";
-        
-        // إظهار الإجابة الصحيحة (الثانية في المصفوفة)
-        const allCards = document.querySelectorAll('.opt-card');
-        allCards[1].classList.add('correct');
+        allCards[q.correct].classList.add('correct');
+        allCards[q.correct].innerHTML += ' <span>✅</span>';
     }
+
+    const btnNext = document.getElementById('btnNext');
+    btnNext.style.display = 'inline-block';
+    btnNext.textContent = current === questions.length - 1 ? 'عرض النتيجة 🏁' : 'التالي ←';
 }
 
-function verifyAnswer(element, isCorrect) {
+const questions = [
+    {
+        text: "أي نوع من الأسئلة يسمح بتحديد إجابة واحدة أو عدة إجابات صحيحة؟",
+        options: ["أ) التاريخ", "ب) الاختيار من متعدد", "ج) التصنيف", "د) تحميل ملف"],
+        correct: 1
+    },
+    {
+        text: "ما نوع الأسئلة المفيد للمسائل الحسابية؟",
+        options: ["أ) النصوص القصيرة", "ب) الأسئلة الرقمية", "ج) المزاوجة", "د) التصنيف"],
+        correct: 1
+    },
+    {
+        text: "كيف يتم تحديد درجة السؤال؟",
+        options: ["أ) من خلال حذف السؤال", "ب) بالضغط على أيقونة «النقاط» وتحديد الدرجة", "ج) بتغيير لون السؤال", "د) بإعادة ترتيب الأسئلة"],
+        correct: 1
+    },
+    {
+        text: "ما فائدة إضافة التغذية الراجعة بعد إجابة الطالب؟",
+        options: ["أ) حذف الإجابة", "ب) إعطاء ملاحظات وتشجيع أو تصحيح الإجابة", "ج) تقليل زمن الاختبار", "د) إلغاء التصحيح التلقائي"],
+        correct: 1
+    }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+function renderQuestion() {
+    const q = questions[current];
+    const total = questions.length;
+    answered = false;
+
+    document.getElementById('qCounter').textContent = `السؤال ${current + 1} من ${total}`;
+    const pct = Math.round(((current + 1) / total) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    document.getElementById('qText').textContent = q.text;
+    document.getElementById('resultMsg').innerHTML = '';
+
     const grid = document.getElementById('optionsGrid');
-    const msg = document.getElementById('resultMsg');
-    
-    if (grid.classList.contains('disabled-grid')) return;
+    grid.className = 'options-grid';
+    grid.innerHTML = '';
 
-    grid.classList.add('disabled-grid');
+    q.options.forEach((opt, i) => {
+        const div = document.createElement('div');
+        div.className = 'opt-card';
+        div.innerHTML = `<span>${opt}</span>`;
+        div.onclick = () => verifyAnswer(div, i);
+        grid.appendChild(div);
+    });
 
-    if (isCorrect) {
-        element.classList.add('correct');
-        element.innerHTML += ' <span>✅</span>'; // إضافة أيقونة داخل الاختيار
-        msg.innerHTML = "✨ أحسنت! إجابة صحيحة ومتميزة";
-        msg.style.color = "#28a745";
-    } else {
-        element.classList.add('wrong');
-        element.innerHTML += ' <span>❌</span>'; // إضافة أيقونة داخل الاختيار
-        msg.innerHTML = "❌ محاولة قريبة، الإجابة الصحيحة هي (ب)";
-        msg.style.color = "#dc3545";
-        
-        // إبراز الإجابة الصحيحة بلطف
-        const allCards = document.querySelectorAll('.opt-card');
-        allCards[1].classList.add('correct');
-        allCards[1].innerHTML += ' <span>✅</span>';
-    }
+    document.getElementById('btnNext').style.display = 'none';
 }
+
+function nextQuestion() {
+    if (current === questions.length - 1) {
+        showSelfResult();
+        return;
+    }
+    current++;
+    renderQuestion();
+}
+
+function showSelfResult() {
+    document.getElementById('quizContent').style.display = 'none';
+    document.getElementById('selfResult').style.display = 'block';
+
+    const total = questions.length;
+    const scorePct = Math.round((score / total) * 100);
+    document.getElementById('selfResultPercent').textContent = scorePct + '%';
+
+    let title = "";
+    let sub = "";
+    if (scorePct >= 80) {
+        title = "أداء متميز! 🌟";
+        sub = `أجبت بشكل صحيح عن ${score} من ${total} أسئلة.`;
+    } else if (scorePct >= 50) {
+        title = "أداء جيد 👍";
+        sub = `أجبت بشكل صحيح عن ${score} من ${total} أسئلة. راجع محتوى الوحدة لتثبيت الفهم.`;
+    } else {
+        title = "تحتاج إلى مراجعة 📚";
+        sub = `أجبت بشكل صحيح عن ${score} من ${total} أسئلة. ننصحك بمراجعة محتوى الوحدة مرة أخرى.`;
+    }
+
+    document.getElementById('selfResultTitle').textContent = title;
+    document.getElementById('selfResultSub').textContent = sub;
+}
+
+renderQuestion();
 </script>
 </body>
 </html>

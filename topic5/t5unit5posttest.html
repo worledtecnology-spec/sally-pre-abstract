@@ -21,6 +21,11 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html, body {
+            height: 100vh;
+            overflow: hidden;
+        }
+
         body {
             font-family: 'Cairo', sans-serif;
             background-color: var(--cream);
@@ -29,15 +34,14 @@
             direction: rtl;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
 
         .top-header {
             background: var(--navy);
             color: var(--gold-light);
             text-align: center;
-            padding: 12px 0;
-            font-size: 15px;
+            padding: 8px 0;
+            font-size: 14px;
             font-weight: 600;
             border-bottom: 3px solid var(--gold);
         }
@@ -157,19 +161,24 @@
 
         .unit-hero-container {
             flex: 1;
+            min-height: 0;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            padding: 20px;
+            align-items: center;
+            padding: 8px;
+            overflow: hidden;
         }
 
         .quiz-card {
             background: var(--white);
             width: 100%; max-width: 750px;
+            max-height: 100%;
             border-radius: 20px;
             border: 1px solid var(--border);
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .quiz-header { background: var(--navy); padding: 8px; text-align: center; }
@@ -326,6 +335,27 @@
     .modal-box { border-radius: 12px; }
     .modal-header, .modal-body, .modal-footer { padding-top: 8px; padding-bottom: 8px; }
 }
+    
+        /* === منع أي سكرول نهائيًا في الصفحة === */
+        html, body {
+            height: 100vh !important;
+            height: 100dvh !important;
+            overflow: hidden !important;
+            margin: 0 !important;
+        }
+        .nav-container, .edu-container {
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .nav-container::-webkit-scrollbar, .edu-container::-webkit-scrollbar {
+            display: none;
+        }
+        .nav-item, .edu-item {
+            flex: 0 0 auto !important;
+            white-space: nowrap !important;
+        }
     </style>
 </head>
 <body>
@@ -427,17 +457,47 @@
         /* ✏️ الأسئلة — correct = رقم الخيار الصحيح (0=أ، 1=ب، 2=ج، 3=د) */
       const questions = [
     {
-        text: "1.	يمكن تفعيل العشوائية لكل من ترتيب الأسئلة وترتيب الإجابات داخل أسئلة الاختيار من متعدد  ",
-        options: ["√ صحيح", "× خطأ"  ],
-        correct: 0
+        text: "1. ترتيب الأسئلة بشكل مختلف لكل طالب يجعل مشاركة الإجابات أسهل.",
+        options: ["√ صحيح", "× خطأ"],
+        correct: 1
     },
     {
-        text: "2. 	تساعد ميزة العشوائية في ترتيب الأسئلة على تقليل فرص الغش بين الطلاب ",
+        text: "2. العشوائية تساعد في جعل الاختبار أكثر ديناميكية وتحديًا.",
         options: ["√ صحيح", "× خطأ"],
         correct: 0
     },
     {
-        text: "3. 	عند تفعيل العشوائية، سيتم حذف بعض الأسئلة من الاختبار تلقائيًا",
+        text: "3. تفعيل العشوائية يجبر الطالب على التركيز على فهم الأسئلة بدلاً من حفظ ترتيبها.",
+        options: ["√ صحيح", "× خطأ"],
+        correct: 0
+    },
+    {
+        text: "4. لتفعيل عشوائية الأسئلة يجب فتح الاختبار ثم الدخول إلى الإعدادات.",
+        options: ["√ صحيح", "× خطأ"],
+        correct: 0
+    },
+    {
+        text: "5. خيار Shuffle Questions يغير لون النموذج فقط.",
+        options: ["√ صحيح", "× خطأ"],
+        correct: 1
+    },
+    {
+        text: "6. يمكن تفعيل عشوائية ترتيب الإجابات من خلال خيار Shuffle Options.",
+        options: ["√ صحيح", "× خطأ"],
+        correct: 0
+    },
+    {
+        text: "7.	يمكن تفعيل العشوائية لكل من ترتيب الأسئلة وترتيب الإجابات داخل أسئلة الاختيار من متعدد  ",
+        options: ["√ صحيح", "× خطأ"  ],
+        correct: 0
+    },
+    {
+        text: "8. 	تساعد ميزة العشوائية في ترتيب الأسئلة على تقليل فرص الغش بين الطلاب ",
+        options: ["√ صحيح", "× خطأ"],
+        correct: 0
+    },
+    {
+        text: "9. 	عند تفعيل العشوائية، سيتم حذف بعض الأسئلة من الاختبار تلقائيًا",
         options: ["√ صحيح", "× خطأ"],
         correct: 1
     }

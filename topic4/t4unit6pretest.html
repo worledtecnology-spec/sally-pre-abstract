@@ -509,7 +509,7 @@
                 <span class="icon-symbol">📜</span>
                 <span>التعليمات</span>
             </a>
-            <a href="../contact.html" class="nav-item" target="_self>
+            <a href="../contact.html" class="nav-item" target="_self">
                 <span class="icon-symbol">✉️</span>
                 <span>التواصل</span>
             </a>
@@ -595,7 +595,37 @@
 
      const questions = [
     {
-        text: "1. 	أي من الخيارات التالية يمكنك تعديله في أسئلة الاختبار الإلكتروني داخل Microsoft Forms................. ",
+        text: "1. يتم إعادة ترتيب الأسئلة من خلال ..............",
+        options: [
+            "باستخدام النسخ واللصق فقط",
+            "باستخدام السحب والإفلات",
+            "بحذف السؤال وإعادة كتابته",
+            "لا يمكن إعادة الترتيب"
+        ],
+        correct: 1
+    },
+    {
+        text: "2. أي من الآتي يُعد من وسائل تنسيق الأسئلة؟",
+        options: [
+            "الخط العريض",
+            "الخط المائل",
+            "الألوان",
+            "جميع ما سبق"
+        ],
+        correct: 3
+    },
+    {
+        text: "3. ما فائدة إضافة التلميحات والإرشادات؟",
+        options: [
+            "زيادة زمن الاختبار",
+            "مساعدة الطلاب على فهم الأسئلة",
+            "حذف الإجابات الخاطئة",
+            "تغيير نوع السؤال"
+        ],
+        correct: 1
+    },
+     {
+        text: "4. 	أي من الخيارات التالية يمكنك تعديله في أسئلة الاختبار الإلكتروني داخل Microsoft Forms................. ",
         options: [
             "نص السؤال فقط    ",
             " نوع السؤال وخيارات الإجابة    ",
@@ -605,7 +635,7 @@
         correct: 1
     },
     {
-        text: "2. لحذف سؤال من الاختبار الإلكتروني في  Microsoft Forms........................ ",
+        text: "5. لحذف سؤال من الاختبار الإلكتروني في  Microsoft Forms........................ ",
         options: [
             "  الضغط على زر تراجع .   ",
             " تحديد السؤال ثم الضغط على أيقونة الحذف    ",
@@ -639,7 +669,7 @@ function renderQuestion() {
 
     q.options.forEach((opt, i) => {
         const div = document.createElement('div');
-        div.className = 'quiz-option' + (answers[current] === letters[i] ? ' selected' : '');
+        div.className = 'quiz-option' + (answers[current] === i ? ' selected' : '');
 
         div.innerHTML = `
             <span class="option-indicator">${letters[i]}</span>
@@ -647,7 +677,7 @@ function renderQuestion() {
         `;
 
         div.onclick = () => {
-            answers[current] = letters[i]; // تخزين (أ / ب / ج / د)
+            answers[current] = i; // تخزين رقم الإجابة (يطابق رقم الإجابة الصحيحة correct)
             renderQuestion();
         };
 

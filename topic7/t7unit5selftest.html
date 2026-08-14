@@ -19,6 +19,11 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
         body {
             font-family: 'Cairo', sans-serif;
             background-color: var(--cream);
@@ -27,7 +32,6 @@
             direction: rtl;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
  /* 1. العنوان العلوي */
         .top-header {
@@ -284,14 +288,34 @@
 /* الكارت الرئيسي - تقليل المسافات الداخلية (padding) */
 .quiz-container {
     max-width: 850px;
-    margin: 35px auto;
+    width: 100%;
+    margin: 30px auto 14px;
     position: relative;
     background: var(--white);
     border-radius: 25px;
     padding: 10px 23px 4px; /* تقليل الارتفاع من خلال الـ padding */
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     border: 1px solid var(--border);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+    overflow: visible;
 }
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+@media (max-height: 700px) {
+    .quiz-container { margin: 24px auto 10px; padding: 8px 20px 4px; }
+    .opt-card { padding: 10px 14px; font-size: 13px; }
+    .quiz-question-text { font-size: 17px; margin-bottom: 10px; }
+}
+
 
 /* العنوان البيضاوي الممتد */
 .quiz-badge-oval {
@@ -499,73 +523,113 @@
 
     <div class="progress-wrapper">
         <div class="progress-bar">
-            <div class="progress-fill"></div>
+            <div class="progress-fill" id="progressFill" style="height:6px; background:var(--gold); border-radius:10px; transition: width .3s ease;"></div>
         </div>
     </div>
 
-    <h2 class="quiz-question-text">   يمكن تصدير الردود من Forms إلى Excel بشكل مباشر.</h2>
+    <div id="qCounter" style="text-align:center; font-weight:700; color: var(--navy-light); margin-bottom: 8px; font-size: 13px;"></div>
 
-    <div class="options-grid" id="optionsGrid">
-        <div class="opt-card" onclick="verifyAnswer(this, false)">
-            <span>أ. إجابة خطأ.</span>
-        </div>
-        
-        <div class="opt-card" onclick="verifyAnswer(this, true)">
-            <span>ب. إجابة صحيحة .</span>
-        </div>
-        
+    <h2 class="quiz-question-text" id="qText"></h2>
+
+    <div class="options-grid" id="optionsGrid"></div>
+
+    <div id="resultMsg" style="text-align: center; margin-top: 10px; font-weight: 700; font-size: 15px; min-height: 22px;"></div>
+
+    <div style="text-align:center; margin-top: 6px; margin-bottom: 4px;">
+        <button id="nextBtn" onclick="nextQuestion()" style="display:none; background: var(--navy); color: var(--gold-light); border:none; padding: 8px 26px; border-radius: 25px; font-weight:700; font-size:13px; cursor:pointer;">السؤال التالي ←</button>
     </div>
-
-    <div id="resultMsg" style="text-align: center; margin-top: 15px; font-weight: 700; font-size: 16px; min-height: 24px;"></div>
 </main>
 <script>
-function verifyAnswer(element, isCorrect) {
+const questions = [
+    {
+        text: "يمكن تصدير الردود من Forms إلى Excel بشكل مباشر.",
+        options: ["إجابة خطأ.", "إجابة صحيحة."],
+        correct: 1
+    },
+    {
+        text: "لا تعرض صفحة النتائج أي رسوم بيانية أو إحصاءات.",
+        options: ["إجابة خطأ.", "إجابة صحيحة."],
+        correct: 0
+    },
+    {
+        text: "يمكن النقر على كل سؤال لعرض تفاصيل الإجابات الفردية.",
+        options: ["إجابة خطأ.", "إجابة صحيحة."],
+        correct: 1
+    },
+    {
+        text: "لا يمكن تحليل النتائج بشكل أعمق باستخدام Excel.",
+        options: ["إجابة خطأ.", "إجابة صحيحة."],
+        correct: 0
+    }
+];
+
+const letters = ['أ', 'ب', 'ج', 'د'];
+let current = 0;
+
+function renderQuestion() {
+    const q = questions[current];
+    const total = questions.length;
+
+    document.getElementById('qText').textContent = q.text;
+    document.getElementById('qCounter').textContent = `السؤال ${current + 1} من ${total}`;
+    document.getElementById('progressFill').style.width = Math.round(((current + 1) / total) * 100) + '%';
+    document.getElementById('resultMsg').innerHTML = '';
+    document.getElementById('nextBtn').style.display = 'none';
+
+    const grid = document.getElementById('optionsGrid');
+    grid.innerHTML = '';
+    grid.classList.remove('disabled-grid');
+
+    q.options.forEach((opt, i) => {
+        const card = document.createElement('div');
+        card.className = 'opt-card';
+        card.innerHTML = `<span>${letters[i]}. ${opt}</span>`;
+        card.onclick = () => verifyAnswer(card, i);
+        grid.appendChild(card);
+    });
+}
+
+function verifyAnswer(element, chosenIndex) {
     const grid = document.getElementById('optionsGrid');
     const msg = document.getElementById('resultMsg');
-    
-    // منع الضغط المتكرر
+
+    if (grid.classList.contains('disabled-grid')) return;
     grid.classList.add('disabled-grid');
+
+    const q = questions[current];
+    const isCorrect = chosenIndex === q.correct;
+    const allCards = document.querySelectorAll('.opt-card');
+    const correctCard = allCards[q.correct];
 
     if (isCorrect) {
         element.classList.add('correct');
+        element.innerHTML += ' <span>✅</span>';
         msg.innerHTML = "✨ أحسنت! إجابة صحيحة";
         msg.style.color = "#28a745";
     } else {
         element.classList.add('wrong');
+        element.innerHTML += ' <span>❌</span>';
+        correctCard.classList.add('correct');
+        correctCard.innerHTML += ' <span>✅</span>';
         msg.innerHTML = "❌ الإجابة غير صحيحة، حاول التركيز أكثر";
         msg.style.color = "#dc3545";
-        
-        // إظهار الإجابة الصحيحة (الثانية في المصفوفة)
-        const allCards = document.querySelectorAll('.opt-card');
-        allCards[1].classList.add('correct');
     }
-}
 
-function verifyAnswer(element, isCorrect) {
-    const grid = document.getElementById('optionsGrid');
-    const msg = document.getElementById('resultMsg');
-    
-    if (grid.classList.contains('disabled-grid')) return;
-
-    grid.classList.add('disabled-grid');
-
-    if (isCorrect) {
-        element.classList.add('correct');
-        element.innerHTML += ' <span>✅</span>'; // إضافة أيقونة داخل الاختيار
-        msg.innerHTML = "✨ أحسنت! إجابة صحيحة ومتميزة";
-        msg.style.color = "#28a745";
+    const nextBtn = document.getElementById('nextBtn');
+    if (current < questions.length - 1) {
+        nextBtn.style.display = 'inline-block';
     } else {
-        element.classList.add('wrong');
-        element.innerHTML += ' <span>❌</span>'; // إضافة أيقونة داخل الاختيار
-        msg.innerHTML = "❌ محاولة قريبة، الإجابة الصحيحة هي (ب)";
-        msg.style.color = "#dc3545";
-        
-        // إبراز الإجابة الصحيحة بلطف
-        const allCards = document.querySelectorAll('.opt-card');
-        allCards[1].classList.add('correct');
-        allCards[1].innerHTML += ' <span>✅</span>';
+        nextBtn.style.display = 'none';
+        msg.innerHTML += "<br><span style='font-size:13px; color: var(--navy-light);'>🎉 انتهيت من التقويم الذاتي</span>";
     }
 }
+
+function nextQuestion() {
+    current++;
+    renderQuestion();
+}
+
+renderQuestion();
 </script>
 </body>
 </html>

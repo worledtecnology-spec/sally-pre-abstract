@@ -374,6 +374,41 @@
                 text: "3. 	يمكن استخدام خيار مخصص لتحميل صورة خلفية من جهازك الشخصي",
                 options: ["√ صحيح", "× خطأ"],
                 correct: 0
+            },
+            {
+                text: "أيقونة التصميم (Theme) توجد عادة في الزاوية العلوية اليمنى.",
+                options: ["√ صحيح", "× خطأ"],
+                correct: 0
+            },
+            {
+                text: "يمكن تحميل صورة من جهازك أو اختيار صورة من مكتبة Microsoft Forms.",
+                options: ["√ صحيح", "× خطأ"],
+                correct: 0
+            },
+            {
+                text: "تساعد المعاينة (Preview) في التأكد من وضوح النصوص فوق الصورة الخلفية.",
+                options: ["√ صحيح", "× خطأ"],
+                correct: 0
+            },
+            {
+                text: "يتم الوصول إلى إعدادات التصميم من .....",
+                options: [
+                    "صفحة النتائج",
+                    "أيقونة Theme أو Style",
+                    "صفحة المشاركة",
+                    "إعدادات الحساب فقط"
+                ],
+                correct: 1
+            },
+            {
+                text: "الخطوة الصحيحة لاختيار صورة خلفية من .........",
+                options: [
+                    "الضغط على «مخصص»",
+                    "حذف النموذج",
+                    "تغيير اللغة",
+                    "إغلاق المتصفح"
+                ],
+                correct: 0
             }
         ];
 
@@ -401,7 +436,7 @@
                     else if (answers[current] === i) cls = ' wrong-flash';
                 }
                 div.className = 'quiz-option' + cls;
-                div.innerHTML = `<span class="option-indicator">${i === 0 ? 'أ' : 'ب'}</span><span>${opt}</span>`;
+                div.innerHTML = `<span class="option-indicator">${['أ','ب','ج','د'][i]}</span><span>${opt}</span>`;
                 div.onclick = () => {
                     if (answers[current] === null) {
                         answers[current] = i;
