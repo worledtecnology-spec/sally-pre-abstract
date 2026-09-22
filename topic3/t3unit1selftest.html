@@ -408,6 +408,14 @@
     line-height: 1.4;
 }
 
+/* شبكة خيارات الإجابة - عمودين */
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
 .options-grid.disabled-grid .opt-card {
     pointer-events: none;
 }
@@ -507,6 +515,7 @@
     .edu-item { min-width: 82px; }
     .modal-box { border-radius: 16px; }
     .modal-header, .modal-body, .modal-footer { padding-left: 16px; padding-right: 16px; }
+    .options-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-height: 768px) {

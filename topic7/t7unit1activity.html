@@ -597,7 +597,7 @@ document.getElementById('fileInput').onchange = function () {
 
 function handleActivitySubmission() {
     const fileInput = document.getElementById('fileInput');
-    const phoneNumber = "201000000000"; // استبدله برقمك (مثال لمصر: 201xxxxxxxxx)
+    const phoneNumber = "201067305522"; // استبدله برقمك (مثال لمصر: 201xxxxxxxxx)
     
     if (fileInput.files.length === 0) {
         alert("من فضلك اختر صورة الشريحة أولاً قبل التسليم");
@@ -624,7 +624,7 @@ function sendToWhatsApp() {
         return;
     }
     
-    const phoneNumber = "201000000000"; // رقمك هنا
+    const phoneNumber = "201067305522"; // رقمك هنا
     const msg = encodeURIComponent("مرحباً دكتور، قمت بتنفيذ النشاط التعليمي الأول (تصميم شريحة المفهوم) وسأرفق الصورة لك الآن.");
     window.open(`https://wa.me/${phoneNumber}?text=${msg}`, '_blank');
 }
