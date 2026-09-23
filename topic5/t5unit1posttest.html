@@ -416,6 +416,7 @@
         let answers = new Array(questions.length).fill(null);
 
         /* ---- رسم السؤال ---- */
+        const LABELS = ['أ', 'ب', 'ج', 'د'];
         function renderQuestion() {
             const q     = questions[current];
             const total = questions.length;
@@ -436,7 +437,7 @@
                     else if (answers[current] === i) cls = ' wrong-flash';
                 }
                 div.className = 'quiz-option' + cls;
-                div.innerHTML = `<span class="option-indicator">${i === 0 ? 'أ' : 'ب'}</span><span>${opt}</span>`;
+                div.innerHTML = `<span class="option-indicator">${LABELS[i]}</span><span>${opt}</span>`;
                 div.onclick = () => {
                     if (answers[current] === null) {
                         answers[current] = i;
